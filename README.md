@@ -1,210 +1,230 @@
-# LeLo SaaS 平台
+# YYC³ - 智能 SaaS 平台
+
+<div align="center">
+
+![YYC³ Logo](./public/yyc3-logo.png)
+
+**万象归元于云枢，深栈智启新纪元**
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.2-blue)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8)](https://tailwindcss.com/)
+
+[功能特性](#功能特性) • [快速开始](#快速开始) • [文档](#文档) • [贡献](#贡献) • [许可证](#许可证)
+
+</div>
+
+---
 
 ## 项目简介
 
-LeLo 是一个现代化的企业级 SaaS 平台，专注于为企业提供智能化的业务管理解决方案。通过整合项目管理、团队协作、数据分析和自动化工具，帮助企业实现数字化转型与业务增长。
+YYC³ 是一个现代化的企业级 SaaS 平台，专注于为企业提供 AI 驱动的智能化业务管理解决方案。通过整合智能数据分析、AI 协作助手、智能客服和工作流自动化，帮助企业实现数字化转型与业务增长。
 
-## 核心功能
+## 功能特性
 
-### 🎯 智能数据分析
-- 实时业务数据监控
-- 可视化数据看板
-- 深度数据洞察与报告
-- 自定义分析维度
-
-### 👥 团队协作
-- 无缝团队沟通
-- 任务分配与跟踪
-- 文件共享与协作
-- 实时通知系统
-
-### ⚡ 极速性能
-- 99.9% 稳定性保障
-- 全球 CDN 加速
-- 响应式设计
-- 移动端优先
-
-### 🔒 企业级安全
-- 银行级数据加密
-- SOC 2 Type II 认证
-- 双因素认证
-- 完整的审计日志
-
-### 🌍 全球部署
-- 多区域数据中心
-- 自动故障转移
-- 负载均衡
-- 私有化部署支持
-
-## 技术栈
-
-- **前端框架**: Next.js 16 (App Router)
-- **UI 组件**: React 19.2 + shadcn/ui
-- **样式方案**: Tailwind CSS
-- **动画库**: Framer Motion
-- **类型检查**: TypeScript
-- **构建工具**: Turbopack
-
-## AI 智能功能规划
-
-### 🤖 AI 驱动的功能增强
+### 🤖 核心 AI 功能
 
 #### 1. 智能数据分析助手
-- **自然语言查询**: 用户可以用自然语言提问，AI 自动生成数据查询和可视化
-- **异常检测**: 自动识别业务数据中的异常模式并发出预警
-- **趋势预测**: 基于历史数据预测未来业务趋势
-- **智能推荐**: 根据数据分析结果提供业务优化建议
+- 自然语言数据查询
+- 实时数据可视化
+- AI 驱动的数据洞察
+- 智能图表生成
 
 #### 2. AI 协作助手
-- **会议纪要生成**: 自动记录会议内容并生成结构化纪要
-- **任务智能分配**: 根据团队成员技能和工作负载智能分配任务
-- **智能提醒**: 基于项目进度和优先级的智能提醒系统
-- **文档自动摘要**: 自动提取长文档的关键信息
+- 会议纪要自动生成
+- 智能任务分配
+- 团队协作优化
+- 文档自动摘要
 
-#### 3. 智能客户服务
-- **AI 客服机器人**: 7×24 小时智能客服支持
-- **情感分析**: 分析客户反馈情绪，优先处理紧急问题
-- **智能工单分类**: 自动分类和路由客户工单
-- **知识库问答**: 基于企业知识库的智能问答系统
+#### 3. 智能客服
+- 7×24 AI 客服机器人
+- 知识库智能检索
+- 工单自动创建
+- 情感分析
 
-#### 4. 智能工作流自动化
-- **流程优化建议**: AI 分析工作流程并提供优化建议
-- **自动化规则生成**: 根据用户行为模式自动生成自动化规则
-- **智能表单填充**: 基于历史数据智能预填表单
-- **文档智能分类**: 自动分类和标记上传的文档
+#### 4. 工作流自动化
+- 可视化工作流设计
+- AI 流程优化分析
+- 自动化规则生成
+- 执行监控和分析
 
-#### 5. 个性化用户体验
-- **智能界面布局**: 根据用户使用习惯自动调整界面布局
-- **个性化推荐**: 推荐相关功能、文档和最佳实践
-- **智能搜索**: 语义搜索，理解用户意图
-- **多语言智能翻译**: 实时翻译团队协作内容
+#### 5. 数据隐私与安全
+- 数据脱敏处理
+- 隐私设置管理
+- 安全审计日志
+- 成本控制
 
-## 可扩展功能模块
+### ⚡ 技术亮点
 
-### 📊 高级分析模块
-- 自定义报表生成器
-- 数据导出与集成
-- 实时数据流处理
-- 预测性分析
-
-### 🔗 集成生态系统
-- 开放 API 平台
-- Webhook 支持
-- 第三方应用市场
-- 企业系统集成（ERP、CRM）
-
-### 🎨 白标定制
-- 品牌定制化
-- 自定义域名
-- 主题编辑器
-- 组件库扩展
-
-### 📱 移动应用
-- iOS 原生应用
-- Android 原生应用
-- 离线模式支持
-- 推送通知
-
-### 🔐 高级安全功能
-- SSO 单点登录
-- SAML 2.0 支持
-- IP 白名单
-- 数据加密密钥管理
-- 合规性报告（GDPR、HIPAA）
+- **现代化技术栈**: Next.js 16 + React 19.2 + TypeScript
+- **AI 驱动**: 基于 Vercel AI SDK v5 构建
+- **流式响应**: 所有 AI 功能支持实时流式输出
+- **性能优化**: 三级缓存架构 + 代码分割
+- **安全可靠**: 数据加密 + 审计日志 + 隐私保护
 
 ## 快速开始
 
-### 安装依赖
+### 前置要求
+
+- Node.js 18.17 或更高版本
+- pnpm 8.0 或更高版本（推荐）
+
+### 安装
 
 \`\`\`bash
-npm install
-# 或
+# 克隆仓库
+git clone https://github.com/your-org/yyc3-saas.git
+cd yyc3-saas
+
+# 安装依赖
 pnpm install
-# 或
-yarn install
+
+# 复制环境变量
+cp .env.example .env.local
+
+# 配置环境变量（编辑 .env.local）
 \`\`\`
 
-### 开发环境运行
+### 开发
 
 \`\`\`bash
-npm run dev
-# 或
+# 启动开发服务器
 pnpm dev
-# 或
-yarn dev
+
+# 在浏览器中打开 http://localhost:3000
 \`\`\`
 
-在浏览器中打开 [http://localhost:3000](http://localhost:3000) 查看效果。
-
-### 构建生产版本
+### 构建
 
 \`\`\`bash
-npm run build
-npm run start
+# 构建生产版本
+pnpm build
+
+# 运行生产服务器
+pnpm start
 \`\`\`
 
 ## 项目结构
 
 \`\`\`
-lelo-saas/
-├── app/                    # Next.js App Router 页面
-│   ├── layout.tsx         # 根布局
-│   ├── page.tsx           # 首页
-│   └── globals.css        # 全局样式
+yyc3-saas/
+├── app/                    # Next.js App Router
+│   ├── analytics/         # 智能数据分析
+│   ├── collaboration/     # AI 协作助手
+│   ├── support/           # 智能客服
+│   ├── workflow/          # 工作流自动化
+│   ├── admin/             # 管理后台
+│   └── api/               # API 路由
 ├── components/            # React 组件
-│   ├── ui/               # UI 基础组件
-│   ├── header.tsx        # 导航栏
-│   ├── hero-section.tsx  # 英雄区
-│   ├── animated-features-section.tsx  # 功能展示
-│   ├── pricing-section.tsx           # 价格方案
-│   ├── faq-section.tsx              # 常见问题
-│   ├── animated-cta-section.tsx     # 行动号召
-│   └── footer.tsx                   # 页脚
-├── lib/                   # 工具函数
-├── public/               # 静态资源
-└── README.md            # 项目文档
+│   ├── ui/               # 基础 UI 组件
+│   └── ...               # 功能组件
+├── lib/                   # 工具库和业务逻辑
+│   ├── ai/               # AI 相关工具
+│   └── ...               # 其他工具
+├── scripts/              # 数据库脚本
+├── docs/                 # 文档
+└── public/               # 静态资源
 \`\`\`
+
+## 文档
+
+- [架构文档](./ARCHITECTURE.md) - 系统架构和技术栈详解
+- [API 文档](./API.md) - API 接口文档
+- [代码规范](./CODING_STANDARDS.md) - 代码风格和最佳实践
+- [部署指南](./DEPLOYMENT.md) - 部署和运维指南
+- [贡献指南](./CONTRIBUTING.md) - 如何参与贡献
+- [环境配置](./ENV_SETUP.md) - 环境变量配置指南
+- [产品路线图](./ROADMAP.md) - 产品发展规划
+- [AI 功能规划](./AI_FEATURES.md) - AI 功能详细设计
+- [安全政策](./SECURITY.md) - 安全和隐私政策
+
+## 技术栈
+
+### 前端
+- **框架**: Next.js 16 (App Router)
+- **UI 库**: React 19.2
+- **类型**: TypeScript 5
+- **样式**: Tailwind CSS 4
+- **组件**: shadcn/ui
+- **动画**: Framer Motion 12
+- **图表**: Recharts 2
+
+### 后端
+- **AI**: Vercel AI SDK 5
+- **验证**: Zod 3
+- **日期**: date-fns 4
+
+### 基础设施
+- **部署**: Vercel
+- **数据库**: PostgreSQL (Supabase/Neon)
+- **缓存**: Redis (Upstash)
+- **存储**: Vercel Blob
+- **监控**: Vercel Analytics
 
 ## 环境变量
 
-创建 \`.env.local\` 文件并配置以下变量：
+查看 [ENV_SETUP.md](./ENV_SETUP.md) 了解详细的环境变量配置指南。
 
-\`\`\`env
-# 数据库配置
-DATABASE_URL=your_database_url
+关键环境变量：
 
-# AI 服务配置（未来功能）
-OPENAI_API_KEY=your_openai_key
-AI_GATEWAY_URL=your_ai_gateway_url
+\`\`\`bash
+# 数据库
+DATABASE_URL=postgresql://...
 
-# 认证配置
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your_secret_key
+# AI 服务
+OPENAI_API_KEY=sk-...
 
-# 第三方集成
-STRIPE_SECRET_KEY=your_stripe_key
-SENDGRID_API_KEY=your_sendgrid_key
+# 认证
+NEXTAUTH_SECRET=...
+
+# 第三方服务
+STRIPE_SECRET_KEY=sk_...
 \`\`\`
 
 ## 部署
 
 ### Vercel 部署（推荐）
 
-1. 将代码推送到 GitHub
-2. 在 Vercel 中导入项目
-3. 配置环境变量
-4. 点击部署
+\`\`\`bash
+# 安装 Vercel CLI
+npm i -g vercel
+
+# 部署
+vercel --prod
+\`\`\`
 
 ### Docker 部署
 
 \`\`\`bash
-docker build -t lelo-saas .
-docker run -p 3000:3000 lelo-saas
+# 构建镜像
+docker build -t yyc3-saas .
+
+# 运行容器
+docker run -p 3000:3000 yyc3-saas
 \`\`\`
 
-## 贡献指南
+查看 [DEPLOYMENT.md](./DEPLOYMENT.md) 了解详细部署指南。
 
-我们欢迎所有形式的贡献！请查看 [CONTRIBUTING.md](CONTRIBUTING.md) 了解详情。
+## 贡献
+
+我们欢迎所有形式的贡献！请查看 [CONTRIBUTING.md](./CONTRIBUTING.md) 了解如何参与。
+
+### 贡献者
+
+感谢所有贡献者的付出！
+
+## 路线图
+
+查看 [ROADMAP.md](./ROADMAP.md) 了解产品发展规划。
+
+### 近期计划
+
+- [ ] 移动端应用
+- [ ] 多语言支持
+- [ ] 高级分析功能
+- [ ] 第三方集成市场
 
 ## 许可证
 
@@ -212,11 +232,28 @@ docker run -p 3000:3000 lelo-saas
 
 ## 联系我们
 
-- 官网: https://lelo.app
-- 邮箱: support@lelo.app
-- 文档: https://docs.lelo.app
-- 社区: https://community.lelo.app
+- **官网**: https://yyc3.app
+- **邮箱**: support@yyc3.app
+- **文档**: https://docs.yyc3.app
+- **社区**: https://community.yyc3.app
+- **GitHub**: https://github.com/your-org/yyc3-saas
+
+## 致谢
+
+感谢以下开源项目：
+
+- [Next.js](https://nextjs.org/)
+- [React](https://react.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Vercel AI SDK](https://sdk.vercel.ai/)
 
 ---
 
-**LeLo** - 智能驱动业务增长，让每一次决策都更精准 🚀
+<div align="center">
+
+**YYC³** - 智能驱动业务增长 🚀
+
+Made with ❤️ by YYC³ Team
+
+</div>

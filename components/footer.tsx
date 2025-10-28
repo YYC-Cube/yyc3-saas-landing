@@ -1,4 +1,4 @@
-import { LeLoLogo } from "./lelo-logo"
+import { YYC3Logo } from "./yyc3-logo"
 
 export function Footer() {
   return (
@@ -6,9 +6,9 @@ export function Footer() {
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
-            <LeLoLogo className="mb-4" />
-            <p className="text-white/70 mb-4 max-w-md">以前沿的 SaaS 解决方案赋能企业。使用 LeLo 掌控您的成功之路。</p>
-            <p className="text-sm text-white/50 italic">"智能驱动业务增长，让每一次决策都更精准"</p>
+            <YYC3Logo className="mb-4" />
+            <p className="text-white/70 mb-4 max-w-md">SaaS 解决方案赋能企业    YYC³ 铺垫您的成功之路</p>
+            <p className="text-sm text-white/50 italic">"万象归元于云枢，深栈智启新纪元"</p>
           </div>
 
           <div>
@@ -65,7 +65,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10 mt-8 pt-8 text-center text-white/50">
-          <p>&copy; 2025 LeLo. 保留所有权利。</p>
+          <p>&copy; 2025 YYC³. 保留所有权利。</p>
         </div>
       </div>
     </footer>

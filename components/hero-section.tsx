@@ -1,5 +1,4 @@
 import { Button } from "./ui/button"
-import { ArrowRight } from "lucide-react"
 import { ParticleTextEffect } from "./particle-text-effect"
 import { InfiniteSlider } from "./ui/infinite-slider"
 import { ProgressiveBlur } from "./ui/progressive-blur"
@@ -8,22 +7,22 @@ export function HeroSection() {
   return (
     <section className="py-20 px-4 relative overflow-hidden min-h-screen flex flex-col justify-between">
       <div className="flex-1 flex items-start justify-center pt-20">
-        <ParticleTextEffect words={["LeLo", "智能", "平台", "未来"]} />
+        <ParticleTextEffect words={["YYC³", "智能", "平台", "未来"]} />
       </div>
 
       <div className="container mx-auto text-center relative z-10 pb-8">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 text-balance">
-            智能驱动业务增长 <span className="text-gray-300">让每一次决策都更精准</span>
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 text-balance">
+            万象归元于云枢，深栈智启新纪元
           </h2>
+          
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Button size="lg" className="bg-white hover:bg-gray-200 text-black group">
-              免费试用
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              YYCloud³
             </Button>
             <Button size="lg" variant="outline" className="border-gray-600 text-white hover:bg-gray-800 bg-transparent">
-              观看演示
+              示例操作
             </Button>
           </div>
 
@@ -38,7 +37,7 @@ export function HeroSection() {
                     <div className="flex">
                       <img
                         className="mx-auto h-5 w-fit invert opacity-60 hover:opacity-100 transition-opacity"
-                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/design-mode-images/nvidia-TAN2JNiFDeluYk9hlkv4qXwWtfx5Cy.svg"
+                        src="/images/design-mode/nvidia(1).svg"
                         alt="Nvidia Logo"
                         height="20"
                         width="auto"
@@ -48,7 +47,7 @@ export function HeroSection() {
                     <div className="flex">
                       <img
                         className="mx-auto h-4 w-fit invert opacity-60 hover:opacity-100 transition-opacity"
-                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/design-mode-images/column-qYeLfzzj1ni9E7PhooLL6Mzip5Zeb4.svg"
+                        src="/images/design-mode/column(1).svg"
                         alt="Column Logo"
                         height="16"
                         width="auto"
@@ -57,7 +56,7 @@ export function HeroSection() {
                     <div className="flex">
                       <img
                         className="mx-auto h-4 w-fit invert opacity-60 hover:opacity-100 transition-opacity"
-                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/design-mode-images/github-twQNbc5nAy2jUs7yh5xic8hsEfBYpQ.svg"
+                        src="/images/design-mode/github(1).svg"
                         alt="GitHub Logo"
                         height="16"
                         width="auto"
@@ -66,7 +65,7 @@ export function HeroSection() {
                     <div className="flex">
                       <img
                         className="mx-auto h-5 w-fit invert opacity-60 hover:opacity-100 transition-opacity"
-                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/design-mode-images/nike-H0OCso4JdUtllUTdAverMAjJmcKVXU.svg"
+                        src="/images/design-mode/nike(1).svg"
                         alt="Nike Logo"
                         height="20"
                         width="auto"
@@ -75,7 +74,7 @@ export function HeroSection() {
                     <div className="flex">
                       <img
                         className="mx-auto h-5 w-fit invert opacity-60 hover:opacity-100 transition-opacity"
-                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/design-mode-images/lemonsqueezy-ZL7mmIzqR10hWcodoO19ajha8AS9VK.svg"
+                        src="/images/design-mode/lemonsqueezy(1).svg"
                         alt="Lemon Squeezy Logo"
                         height="20"
                         width="auto"
@@ -84,7 +83,7 @@ export function HeroSection() {
                     <div className="flex">
                       <img
                         className="mx-auto h-4 w-fit invert opacity-60 hover:opacity-100 transition-opacity"
-                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/design-mode-images/laravel-sDCMR3A82V8F6ycZymrDlmiFpxyUd4.svg"
+                        src="/images/design-mode/laravel(1).svg"
                         alt="Laravel Logo"
                         height="16"
                         width="auto"
@@ -93,7 +92,7 @@ export function HeroSection() {
                     <div className="flex">
                       <img
                         className="mx-auto h-7 w-fit invert opacity-60 hover:opacity-100 transition-opacity"
-                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/design-mode-images/lilly-Jhslk9VPUVAVK2SCJmCGTEbqKMef5v.svg"
+                        src="/images/design-mode/lilly(1).svg"
                         alt="Lilly Logo"
                         height="28"
                         width="auto"
@@ -103,7 +102,7 @@ export function HeroSection() {
                     <div className="flex">
                       <img
                         className="mx-auto h-6 w-fit invert opacity-60 hover:opacity-100 transition-opacity"
-                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/design-mode-images/openai-5TPubXl1hnLxeIs4ygVSLjJcUoBOCB.svg"
+                        src="/images/design-mode/openai(1).svg"
                         alt="OpenAI Logo"
                         height="24"
                         width="auto"

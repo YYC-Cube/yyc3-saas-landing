@@ -1,8 +1,8 @@
-# LeLo AI 智能功能详细设计
+# YYC³ AI 智能功能详细设计
 
 ## 概述
 
-本文档详细描述 LeLo SaaS 平台的 AI 智能功能设计方案，包括技术架构、实现细节和用户体验设计。
+本文档详细描述 YYC³ SaaS 平台的 AI 智能功能设计方案，包括技术架构、实现细节和用户体验设计。
 
 ## 技术架构
 
@@ -260,7 +260,7 @@ export async function POST(req: Request) {
   const result = await streamText({
     model: openai('gpt-4'),
     system: \`
-      你是 LeLo 的 AI 客服助手。你的任务是帮助用户解决问题。
+      你是 YYC³ 的 AI 客服助手。你的任务是帮助用户解决问题。
       
       用户信息:
       - 订阅方案: \${userContext.subscriptions.plan}
@@ -393,8 +393,8 @@ export function sanitizeData(data: any): any {
 import { Redis } from '@upstash/redis'
 
 const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_URL!,
-  token: process.env.UPSTASH_REDIS_TOKEN!,
+  url: process.env.KV_REST_API_URL!,
+  token: process.env.KV_REST_API_TOKEN!,
 })
 
 export async function getCachedResponse(

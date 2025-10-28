@@ -54,15 +54,15 @@ export function AnimatedCTASection() {
             className="text-xl text-white/90 mb-8 max-w-2xl mx-auto drop-shadow-md animate-fade-in-up"
             style={{ animationDelay: "0.7s" }}
           >
-            加入数千家企业的行列，使用 LeLo 简化运营流程，提升生产力
+            加入数千家企业的行列，使用 YYC³ 简化运营流程，提升生产力
           </p>
           <div
             className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up"
             style={{ animationDelay: "0.9s" }}
           >
             <Button size="lg" className="bg-white text-black hover:bg-white/90 group">
-              开始免费试用
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              免费试用
+              
             </Button>
             <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 bg-transparent">
               联系销售
