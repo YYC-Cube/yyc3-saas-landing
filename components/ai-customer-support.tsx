@@ -122,14 +122,14 @@ export function AICustomerSupport() {
             {/* 输入区域 */}
             <form onSubmit={handleSubmit} className="flex gap-2">
               <Input
-                value={input}
+                value={input || ""}
                 onChange={handleInputChange}
                 placeholder="输入您的问题..."
                 disabled={isLoading}
                 className="flex-1"
                 maxLength={500}
               />
-              <Button type="submit" disabled={isLoading || !input.trim()}>
+              <Button type="submit" disabled={isLoading || !(input || "").trim()}>
                 {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
               </Button>
             </form>
