@@ -232,11 +232,9 @@ docker run -p 3000:3000 yyc3-saas
 
 ## 联系我们
 
-- **官网**: https://yyc3.app
-- **邮箱**: support@yyc3.app
-- **文档**: https://docs.yyc3.app
-- **社区**: https://community.yyc3.app
-- **GitHub**: https://github.com/your-org/yyc3-saas
+- **官网**: [https://saas.mymgmt.com.cn/]
+- **邮箱**: admin@0379.email
+- **GitHub**: https://github.com/YYC-Cube/yyc3-saas-landing.git
 
 ## 致谢
 
