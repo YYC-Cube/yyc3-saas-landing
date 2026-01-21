@@ -1,7 +1,23 @@
 import type React from "react"
 import type { Metadata } from "next"
 import "./globals.css"
-import ClientLayout from "./ClientLayout"
+import { Inter, JetBrains_Mono, Playfair_Display } from "next/font/google"
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+})
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  weight: ["400", "700"],
+})
 
 export const metadata: Metadata = {
   title: "YYC³ - 万象归元于云枢，深栈智启新纪元",
@@ -14,5 +30,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return <ClientLayout>{children}</ClientLayout>
+  return (
+    <html lang="zh-CN">
+      <body className={`font-sans ${inter.variable} ${jetbrainsMono.variable} ${playfair.variable}`}>
+        {children}
+      </body>
+    </html>
+  )
 }

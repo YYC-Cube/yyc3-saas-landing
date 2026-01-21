@@ -5,7 +5,8 @@
 ![YYC³ Banner](./public/yyc3-banner-nexus-v1.0.0-dark2-1800x400.png)
 
 **万象归元于云枢，深栈智启新纪元**
-**Words Initiate Quadrants, Language Serves as Core for the Future**
+
+***Words Initiate Quadrants, Language Serves as Core for the Future***
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -278,7 +279,7 @@ docker run -p 3200:3200 yyc3-saas
 ## 联系我们
 
 - **官网**: <https://yyc3.app>
-- **邮箱**: <support@yyc3.app>
+- **邮箱**: <admin@0379.email>
 - **文档**: <https://docs.yyc3.app>
 - **社区**: <https://community.yyc3.app>
 - **GitHub**: <https://github.com/YYC-Cube/yyc3-saas-landing.git>
@@ -300,6 +301,7 @@ docker run -p 3200:3200 yyc3-saas
 **YYC³** - 智能驱动业务增长 🚀
 
 **万象归元于云枢，深栈智启新纪元**
+
 **All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence**
 
 Made with ❤️ by YYC³ Team
