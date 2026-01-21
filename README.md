@@ -27,30 +27,35 @@ YYC³ 是一个现代化的企业级 SaaS 平台，专注于为企业提供 AI �
 ### 🤖 核心 AI 功能
 
 #### 1. 智能数据分析助手
+
 - 自然语言数据查询
 - 实时数据可视化
 - AI 驱动的数据洞察
 - 智能图表生成
 
 #### 2. AI 协作助手
+
 - 会议纪要自动生成
 - 智能任务分配
 - 团队协作优化
 - 文档自动摘要
 
 #### 3. 智能客服
+
 - 7×24 AI 客服机器人
 - 知识库智能检索
 - 工单自动创建
 - 情感分析
 
 #### 4. 工作流自动化
+
 - 可视化工作流设计
 - AI 流程优化分析
 - 自动化规则生成
 - 执行监控和分析
 
 #### 5. 数据隐私与安全
+
 - 数据脱敏处理
 - 隐私设置管理
 - 安全审计日志
@@ -74,43 +79,54 @@ YYC³ 是一个现代化的企业级 SaaS 平台，专注于为企业提供 AI �
 ### 安装
 
 \`\`\`bash
+
 # 克隆仓库
-git clone https://github.com/your-org/yyc3-saas.git
-cd yyc3-saas
+
+git clone <https://github.com/YYC-Cube/yyc3-saas-landing.git>
+cd yyc3-saas-landing
 
 # 安装依赖
+
 pnpm install
 
 # 复制环境变量
+
 cp .env.example .env.local
 
 # 配置环境变量（编辑 .env.local）
+
 \`\`\`
 
 ### 开发
 
 \`\`\`bash
+
 # 启动开发服务器
+
 pnpm dev
 
-# 在浏览器中打开 http://localhost:3000
+# 在浏览器中打开 <http://localhost:3000>
+
 \`\`\`
 
 ### 构建
 
 \`\`\`bash
+
 # 构建生产版本
+
 pnpm build
 
 # 运行生产服务器
+
 pnpm start
 \`\`\`
 
 ## 项目结构
 
 \`\`\`
-yyc3-saas/
-├── app/                    # Next.js App Router
+yyc3-saas-landing/
+├── app/                   # Next.js App Router
 │   ├── analytics/         # 智能数据分析
 │   ├── collaboration/     # AI 协作助手
 │   ├── support/           # 智能客服
@@ -118,14 +134,14 @@ yyc3-saas/
 │   ├── admin/             # 管理后台
 │   └── api/               # API 路由
 ├── components/            # React 组件
-│   ├── ui/               # 基础 UI 组件
-│   └── ...               # 功能组件
+│   ├── ui/                # 基础 UI 组件
+│   └── ...                # 功能组件
 ├── lib/                   # 工具库和业务逻辑
-│   ├── ai/               # AI 相关工具
-│   └── ...               # 其他工具
-├── scripts/              # 数据库脚本
-├── docs/                 # 文档
-└── public/               # 静态资源
+│   ├── ai/                # AI 相关工具
+│   └── ...                # 其他工具
+├── scripts/               # 数据库脚本
+├── docs/                  # 文档
+└── public/                # 静态资源
 \`\`\`
 
 ## 文档
@@ -143,6 +159,7 @@ yyc3-saas/
 ## 技术栈
 
 ### 前端
+
 - **框架**: Next.js 16 (App Router)
 - **UI 库**: React 19.2
 - **类型**: TypeScript 5
@@ -152,11 +169,13 @@ yyc3-saas/
 - **图表**: Recharts 2
 
 ### 后端
+
 - **AI**: Vercel AI SDK 5
 - **验证**: Zod 3
 - **日期**: date-fns 4
 
 ### 基础设施
+
 - **部署**: Vercel
 - **数据库**: PostgreSQL (Supabase/Neon)
 - **缓存**: Redis (Upstash)
@@ -170,16 +189,21 @@ yyc3-saas/
 关键环境变量：
 
 \`\`\`bash
+
 # 数据库
+
 DATABASE_URL=postgresql://...
 
 # AI 服务
+
 OPENAI_API_KEY=sk-...
 
 # 认证
+
 NEXTAUTH_SECRET=...
 
 # 第三方服务
+
 STRIPE_SECRET_KEY=sk_...
 \`\`\`
 
@@ -188,20 +212,26 @@ STRIPE_SECRET_KEY=sk_...
 ### Vercel 部署（推荐）
 
 \`\`\`bash
+
 # 安装 Vercel CLI
+
 npm i -g vercel
 
 # 部署
+
 vercel --prod
 \`\`\`
 
 ### Docker 部署
 
 \`\`\`bash
+
 # 构建镜像
+
 docker build -t yyc3-saas .
 
 # 运行容器
+
 docker run -p 3000:3000 yyc3-saas
 \`\`\`
 
@@ -232,11 +262,11 @@ docker run -p 3000:3000 yyc3-saas
 
 ## 联系我们
 
-- **官网**: https://yyc3.app
-- **邮箱**: support@yyc3.app
-- **文档**: https://docs.yyc3.app
-- **社区**: https://community.yyc3.app
-- **GitHub**: https://github.com/your-org/yyc3-saas
+- **官网**: <https://yyc3.app>
+- **邮箱**: <support@yyc3.app>
+- **文档**: <https://docs.yyc3.app>
+- **社区**: <https://community.yyc3.app>
+- **GitHub**: <https://github.com/your-org/yyc3-saas>
 
 ## 致谢
 
