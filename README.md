@@ -1,16 +1,22 @@
-# YYC³ - 智能 SaaS 平台
+# YYC³ - SaaS 智能平台
 
 <div align="center">
 
-![YYC³ Logo](./public/yyc3-logo.png)
+![YYC³ Banner](./public/yyc3-banner-nexus-v1.0.0-dark2-1800x400.png)
 
 **万象归元于云枢，深栈智启新纪元**
+**Words Initiate Quadrants, Language Serves as Core for the Future**
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.2-blue)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8)](https://tailwindcss.com/)
+[![AI SDK](https://img.shields.io/badge/AI%20SDK-Vercel%20v5-purple)](https://sdk.vercel.ai/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue)](https://www.postgresql.org/)
+[![Redis](https://img.shields.io/badge/Redis-7-red)](https://redis.io/)
+[![Docker](https://img.shields.io/badge/Docker-20.10-blue)](https://www.docker.com/)
+[![Vercel](https://img.shields.io/badge/Vercel-Deployed-green)](https://vercel.com/)
 
 [功能特性](#功能特性) • [快速开始](#快速开始) • [文档](#文档) • [贡献](#贡献) • [许可证](#许可证)
 
@@ -284,6 +290,11 @@ docker run -p 3200:3200 yyc3-saas
 
 **YYC³** - 智能驱动业务增长 🚀
 
+**万象归元于云枢，深栈智启新纪元**
+**All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence**
+
 Made with ❤️ by YYC³ Team
+
+**Contact**: <admin@0379.email>
 
 </div>
