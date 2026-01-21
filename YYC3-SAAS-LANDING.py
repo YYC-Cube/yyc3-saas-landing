@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 @file YYC3-SAAS-LANDING.py
-@description YYC3-SAAS 全文档架构一键生成脚本，用于生成符合YYC3标准的完整文档架构
+@description YYC3-SAAS 全文档架构一键生成脚本，用于生成符合YYC3标准的完整文档架构，支持文档内容验证和自动更新功能
 @author YanYuCloudCube Team
 @version v1.0.0
 @created 2025-12-29
@@ -11,10 +11,13 @@
 @license MIT
 """
 
-# @Desc: YYC3-SAAS 全文档架构一键生成脚本 | 生成根目录docs/ | 无任何错误
+# @Desc: YYC3-SAAS 全文档架构一键生成脚本 | 生成根目录docs/ | 无任何错误 | 支持文档验证和自动更新
 import os
 import sys
 import argparse
+import re
+import datetime
+import json
 
 # ===================== 核心配置区 =====================
 # 文档根目录
@@ -478,6 +481,184 @@ PROJECT_STRUCT = {
     ]
 }
 
+# ===================== 命令行参数 =====================
+def parse_args():
+    """解析命令行参数"""
+    parser = argparse.ArgumentParser(description='YYC3-SAAS 全文档架构一键生成脚本')
+
+    # 模式选择
+    parser.add_argument('--mode', choices=['generate', 'validate', 'update'], default='generate',
+                      help='运行模式: generate(生成文档), validate(验证文档), update(更新文档)')
+
+    # 验证选项
+    parser.add_argument('--check-format', action='store_true', default=True,
+                      help='检查文档格式是否符合规范')
+    parser.add_argument('--check-headers', action='store_true', default=True,
+                      help='检查文档头部信息是否完整')
+    parser.add_argument('--check-content', action='store_true', default=True,
+                      help='检查文档内容是否符合规范')
+    parser.add_argument('--check-links', action='store_true', default=False,
+                      help='检查文档中的链接是否有效')
+
+    # 更新选项
+    parser.add_argument('--update-version', action='store_true', default=True,
+                      help='更新文档版本号')
+    parser.add_argument('--update-date', action='store_true', default=True,
+                      help='更新文档日期')
+    parser.add_argument('--new-version', type=str, default=None,
+                      help='指定新的版本号')
+
+    # 其他选项
+    parser.add_argument('--verbose', '-v', action='store_true', default=False,
+                      help='详细输出')
+    parser.add_argument('--dry-run', action='store_true', default=False,
+                      help='试运行，不实际修改文件')
+
+    return parser.parse_args()
+
+# ===================== 文档验证函数 =====================
+def validate_document_format(file_path, verbose=False):
+    """验证文档格式是否符合规范"""
+    try:
+        with open(file_path, 'r', encoding=ENCODING) as f:
+            content = f.read()
+
+        # 检查是否为Markdown文件
+        if not file_path.endswith('.md'):
+            return False, '文件不是Markdown格式'
+
+        # 检查是否包含文档头部
+        if not content.startswith('---'):
+            return False, '缺少文档头部信息'
+
+        # 检查是否包含YYC3标识
+        if 'YanYuCloudCube' not in content:
+            return False, '缺少YYC3标识'
+
+        return True, '格式验证通过'
+    except Exception as e:
+        return False, f'验证失败: {str(e)}'
+
+def validate_document_headers(file_path, verbose=False):
+    """验证文档头部信息是否完整"""
+    try:
+        with open(file_path, 'r', encoding=ENCODING) as f:
+            content = f.read()
+
+        # 提取文档头部
+        header_match = re.search(r'^---\n(.*?)\n---\n', content, re.DOTALL)
+        if not header_match:
+            return False, '缺少文档头部信息'
+
+        header_content = header_match.group(1)
+
+        # 检查必要的头部字段
+        required_fields = ['@file', '@description', '@author', '@version', '@created', '@updated', '@status']
+        missing_fields = []
+
+        for field in required_fields:
+            if field not in header_content:
+                missing_fields.append(field)
+
+        if missing_fields:
+            return False, f'缺少必要的头部字段: {missing_fields}'
+
+        return True, '头部信息验证通过'
+    except Exception as e:
+        return False, f'验证失败: {str(e)}'
+
+def validate_document_content(file_path, verbose=False):
+    """验证文档内容是否符合规范"""
+    try:
+        with open(file_path, 'r', encoding=ENCODING) as f:
+            content = f.read()
+
+        # 检查是否包含核心内容结构
+        if '## 核心内容' not in content:
+            return False, '缺少核心内容部分'
+
+        # 检查是否包含概述
+        if '## 概述' not in content:
+            return False, '缺少概述部分'
+
+        return True, '内容验证通过'
+    except Exception as e:
+        return False, f'验证失败: {str(e)}'
+
+def check_links(file_path, verbose=False):
+    """检查文档中的链接是否有效"""
+    try:
+        with open(file_path, 'r', encoding=ENCODING) as f:
+            content = f.read()
+
+        # 提取所有链接
+        links = re.findall(r'\[([^\]]+)\]\(([^)]+)\)', content)
+
+        broken_links = []
+        for link_text, link_url in links:
+            # 检查本地文件链接
+            if link_url.startswith('./') or link_url.startswith('../'):
+                link_path = os.path.join(os.path.dirname(file_path), link_url)
+                if not os.path.exists(link_path):
+                    broken_links.append(f'{link_text}: {link_url}')
+
+        if broken_links:
+            return False, f'发现无效链接: {broken_links}'
+
+        return True, '链接验证通过'
+    except Exception as e:
+        return False, f'检查失败: {str(e)}'
+
+# ===================== 文档更新函数 =====================
+def update_document(file_path, new_version=None, update_version=True, update_date=True, dry_run=False, verbose=False):
+    """更新文档版本号和日期"""
+    try:
+        with open(file_path, 'r', encoding=ENCODING) as f:
+            content = f.read()
+
+        updated_content = content
+        changes = []
+
+        # 更新日期
+        if update_date:
+            today = datetime.date.today().isoformat()
+            # 更新 @updated 字段
+            updated_content = re.sub(r'@updated: .*$', f'@updated: {today}', updated_content, flags=re.MULTILINE)
+            changes.append(f'更新日期为 {today}')
+
+        # 更新版本号
+        if update_version:
+            if new_version:
+                # 使用指定的新版本号
+                updated_content = re.sub(r'@version: .*$', f'@version: {new_version}', updated_content, flags=re.MULTILINE)
+                changes.append(f'更新版本号为 {new_version}')
+            else:
+                # 自动增加补丁版本号
+                version_match = re.search(r'@version: v(\d+)\.(\d+)\.(\d+)', updated_content)
+                if version_match:
+                    major, minor, patch = map(int, version_match.groups())
+                    new_patch = patch + 1
+                    new_version_str = f'v{major}.{minor}.{new_patch}'
+                    updated_content = re.sub(r'@version: .*$', f'@version: {new_version_str}', updated_content, flags=re.MULTILINE)
+                    changes.append(f'更新版本号为 {new_version_str}')
+
+        # 写入文件
+        if not dry_run and changes:
+            with open(file_path, 'w', encoding=ENCODING) as f:
+                f.write(updated_content)
+            if verbose:
+                print(f"\n已更新文档: {os.path.basename(file_path)}")
+                for change in changes:
+                    print(f"  - {change}")
+        elif changes and verbose:
+            print(f"\n将更新文档: {os.path.basename(file_path)}")
+            for change in changes:
+                print(f"  - {change}")
+
+        return True, f'文档更新完成: {changes}' if changes else True, '无需更新'
+    except Exception as e:
+        return False, f'更新失败: {str(e)}'
+
 # ===================== 核心生成逻辑 =====================
 def create_dir(path):
     """创建目录，不存在则创建"""
@@ -656,12 +837,175 @@ def generate_project(root_dir, version, creation_date, status, encoding):
 def parse_args():
     """解析命令行参数"""
     parser = argparse.ArgumentParser(description='YYC3-SAAS 全文档架构一键生成脚本')
+
+    # 模式选择
+    parser.add_argument('--mode', choices=['generate', 'validate', 'update'], default='generate',
+                      help='运行模式: generate(生成文档), validate(验证文档), update(更新文档)')
+
+    # 生成选项
     parser.add_argument('--root', '-r', default=DOCUMENT_ROOT, help='文档根目录 (默认: docs)')
     parser.add_argument('--version', '-v', default=VERSION, help='版本号 (默认: v1.0.0)')
     parser.add_argument('--date', '-d', default=CREATION_DATE, help='创建日期 (默认: 2025-12-29)')
     parser.add_argument('--status', '-s', default=STATUS, help='文档状态 (默认: published)')
     parser.add_argument('--encoding', '-e', default=ENCODING, help='文件编码 (默认: utf-8)')
+
+    # 验证选项
+    parser.add_argument('--check-format', action='store_true', default=True,
+                      help='检查文档格式是否符合规范')
+    parser.add_argument('--check-headers', action='store_true', default=True,
+                      help='检查文档头部信息是否完整')
+    parser.add_argument('--check-content', action='store_true', default=True,
+                      help='检查文档内容是否符合规范')
+    parser.add_argument('--check-links', action='store_true', default=False,
+                      help='检查文档中的链接是否有效')
+
+    # 更新选项
+    parser.add_argument('--update-version', action='store_true', default=True,
+                      help='更新文档版本号')
+    parser.add_argument('--update-date', action='store_true', default=True,
+                      help='更新文档日期')
+    parser.add_argument('--new-version', type=str, default=None,
+                      help='指定新的版本号')
+
+    # 其他选项
+    parser.add_argument('--verbose', '-V', action='store_true', default=False,
+                      help='详细输出')
+    parser.add_argument('--dry-run', action='store_true', default=False,
+                      help='试运行，不实际修改文件')
+
     return parser.parse_args()
+
+def validate_all_documents(args):
+    """验证所有文档"""
+    print("\n====================================")
+    print("YYC3-SAAS 文档验证")
+    print("====================================")
+
+    print(f"\n[1/2] 开始验证文档...")
+    print(f"文档根目录: {os.path.abspath(DOCUMENT_ROOT)}")
+
+    # 遍历所有文档
+    valid_count = 0
+    invalid_count = 0
+    total_count = 0
+
+    for root, _, files in os.walk(DOCUMENT_ROOT):
+        for file in files:
+            if file.endswith('.md'):
+                total_count += 1
+                file_path = os.path.join(root, file)
+
+                print(f"\n验证文档: {os.path.relpath(file_path, DOCUMENT_ROOT)}")
+
+                # 验证格式
+                if args.check_format:
+                    valid, message = validate_document_format(file_path, args.verbose)
+                    if not valid:
+                        print(f"  ❌ 格式验证失败: {message}")
+                        invalid_count += 1
+                        continue
+                    else:
+                        print(f"  ✅ 格式验证通过: {message}")
+
+                # 验证头部信息
+                if args.check_headers:
+                    valid, message = validate_document_headers(file_path, args.verbose)
+                    if not valid:
+                        print(f"  ❌ 头部信息验证失败: {message}")
+                        invalid_count += 1
+                        continue
+                    else:
+                        print(f"  ✅ 头部信息验证通过: {message}")
+
+                # 验证内容
+                if args.check_content:
+                    valid, message = validate_document_content(file_path, args.verbose)
+                    if not valid:
+                        print(f"  ❌ 内容验证失败: {message}")
+                        invalid_count += 1
+                        continue
+                    else:
+                        print(f"  ✅ 内容验证通过: {message}")
+
+                # 检查链接
+                if args.check_links:
+                    valid, message = check_links(file_path, args.verbose)
+                    if not valid:
+                        print(f"  ❌ 链接检查失败: {message}")
+                        invalid_count += 1
+                        continue
+                    else:
+                        print(f"  ✅ 链接检查通过: {message}")
+
+                valid_count += 1
+                if total_count % 10 == 0:
+                    print(f"\n已验证 {total_count} 个文档...")
+
+    print("\n====================================")
+    print(f"文档验证完成!")
+    print(f"总文档数: {total_count}")
+    print(f"验证通过: {valid_count}")
+    print(f"验证失败: {invalid_count}")
+    print("====================================")
+
+def update_all_documents(args):
+    """更新所有文档"""
+    print("\n====================================")
+    print("YYC3-SAAS 文档更新")
+    print("====================================")
+
+    print(f"\n[1/2] 开始更新文档...")
+    print(f"文档根目录: {os.path.abspath(DOCUMENT_ROOT)}")
+    print(f"更新版本: {args.update_version}")
+    print(f"更新日期: {args.update_date}")
+    print(f"新版本号: {args.new_version or '自动增加'}")
+    print(f"试运行: {args.dry_run}")
+
+    # 遍历所有文档
+    updated_count = 0
+    skipped_count = 0
+    failed_count = 0
+    total_count = 0
+
+    for root, _, files in os.walk(DOCUMENT_ROOT):
+        for file in files:
+            if file.endswith('.md'):
+                total_count += 1
+                file_path = os.path.join(root, file)
+
+                try:
+                    success, message = update_document(
+                        file_path,
+                        new_version=args.new_version,
+                        update_version=args.update_version,
+                        update_date=args.update_date,
+                        dry_run=args.dry_run,
+                        verbose=args.verbose
+                    )
+
+                    if success:
+                        if '无需更新' not in message:
+                            updated_count += 1
+                        else:
+                            skipped_count += 1
+                    else:
+                        print(f"更新失败: {os.path.relpath(file_path, DOCUMENT_ROOT)} - {message}")
+                        failed_count += 1
+
+                except Exception as e:
+                    print(f"更新异常: {os.path.relpath(file_path, DOCUMENT_ROOT)} - {str(e)}")
+                    failed_count += 1
+
+                if total_count % 10 == 0:
+                    print(f"\n已处理 {total_count} 个文档...")
+
+    print("\n====================================")
+    print(f"文档更新完成!")
+    print(f"总文档数: {total_count}")
+    print(f"更新成功: {updated_count}")
+    print(f"无需更新: {skipped_count}")
+    print(f"更新失败: {failed_count}")
+    print("====================================")
 
 # ===================== 执行入口 =====================
 if __name__ == "__main__":
@@ -669,15 +1013,24 @@ if __name__ == "__main__":
         # 解析命令行参数
         args = parse_args()
 
-        # 覆盖默认配置
-        document_root = args.root
-        version = args.version
-        creation_date = args.date
-        status = args.status
-        encoding = args.encoding
+        # 根据模式执行不同的功能
+        if args.mode == 'generate':
+            # 覆盖默认配置
+            document_root = args.root
+            version = args.version
+            creation_date = args.date
+            status = args.status
+            encoding = args.encoding
 
-        # 生成项目文档
-        generate_project(document_root, version, creation_date, status, encoding)
+            # 生成项目文档
+            generate_project(document_root, version, creation_date, status, encoding)
+        elif args.mode == 'validate':
+            validate_all_documents(args)
+        elif args.mode == 'update':
+            update_all_documents(args)
+        else:
+            print(f"未知模式: {args.mode}")
+            print("可用模式: generate, validate, update")
     except Exception as e:
-        print("❌ 生成失败: {}".format(str(e)))
+        print("❌ 执行失败: {}".format(str(e)))
         sys.exit(1)
