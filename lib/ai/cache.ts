@@ -1,6 +1,13 @@
 /**
- * AI 响应缓存管理
- * 提供智能缓存策略以提升性能和降低成本
+ * @file 缓存服务
+ * @description 提供AI响应缓存功能
+ * @module lib/ai/cache
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
  */
 
 import { Redis } from "@upstash/redis"

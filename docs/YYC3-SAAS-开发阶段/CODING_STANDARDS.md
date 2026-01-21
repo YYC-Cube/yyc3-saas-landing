@@ -1,4 +1,4 @@
-# YYC³ 代码规范
+# YYC³（YanYuCloudCube）SAAS 平台代码规范
 
 ## 目录
 

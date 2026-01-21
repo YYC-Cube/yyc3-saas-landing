@@ -1,4 +1,4 @@
-# YYC³ AI 智能功能详细设计
+# YYC³（YanYuCloudCube） SAAS 平台智能功能详细设计
 
 ## 概述
 

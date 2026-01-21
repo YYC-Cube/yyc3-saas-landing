@@ -1,4 +1,4 @@
-# YYC³ 部署指南
+# YYC³（YanYuCloudCube）SAAS 平台部署指南
 
 ## 目录
 

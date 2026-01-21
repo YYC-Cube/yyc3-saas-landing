@@ -1,3 +1,15 @@
+/**
+ * @file AI分析路由
+ * @description 处理AI驱动的数据分析请求
+ * @module api/ai/analytics
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 import { streamText, convertToModelMessages, tool, type UIMessage } from "ai"
 import { z } from "zod"
 
@@ -167,11 +179,11 @@ export async function POST(req: Request) {
     })
 
     return result.toUIMessageStreamResponse({
-      onFinish: async ({ isAborted, usage }) => {
+      onFinish: async ({ isAborted }) => {
         if (isAborted) {
           console.log("[v0] AI Analytics request aborted")
         } else {
-          console.log("[v0] AI Analytics completed, tokens used:", usage)
+          console.log("[v0] AI Analytics completed")
         }
       },
     })

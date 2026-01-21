@@ -1,3 +1,15 @@
+/**
+ * @file 工作流报告路由
+ * @description 处理工作流报告生成请求
+ * @module api/workflow/report
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 import { type NextRequest, NextResponse } from "next/server"
 import { generateOptimizationReport } from "@/lib/ai/workflow-optimizer"
 

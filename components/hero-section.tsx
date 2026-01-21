@@ -1,3 +1,15 @@
+/**
+ * @file 英雄区域组件
+ * @description 提供页面顶部的主要展示区域，包含标题、描述和行动按钮
+ * @component HeroSection
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 import { Button } from "./ui/button"
 import { ParticleTextEffect } from "./particle-text-effect"
 import { InfiniteSlider } from "./ui/infinite-slider"

@@ -1,3 +1,15 @@
+/**
+ * @file 动画特性区域组件
+ * @description 提供具有动画效果的特性展示区域，突出产品核心功能
+ * @component AnimatedFeaturesSection
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 "use client"
 
 import type React from "react"

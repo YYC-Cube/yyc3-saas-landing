@@ -1,3 +1,15 @@
+/**
+ * @file 隐私设置路由
+ * @description 处理隐私设置更新请求
+ * @module api/settings/privacy
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 import { type NextRequest, NextResponse } from "next/server"
 import { DEFAULT_PRIVACY_SETTINGS, type PrivacySettings } from "@/lib/ai/data-privacy"
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { useChat } from "ai/react"
+import { useChat } from "@ai-sdk/react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -12,18 +12,18 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 
 export function AICustomerSupport() {
   const [userId] = useState("demo-user-001") // 实际应用中从认证系统获取
+  const [input, setInput] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [chatError, setChatError] = useState<string | null>(null)
 
-  const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
-    api: "/api/ai/customer-support",
-    body: { userId },
-    initialMessages: [
-      {
-        id: "welcome",
-        role: "assistant",
-        content:
-          "您好！我是 YYC³ 的 AI 智能客服助手。我可以帮您解答关于产品功能、账户管理、技术支持等问题。请问有什么可以帮助您的吗？",
-      },
-    ],
+  const { messages, sendMessage } = useChat({
+    onError: (error) => {
+      console.error("Chat error:", error)
+      setChatError("服务暂时不可用，请稍后重试")
+    },
+    onFinish: () => {
+      setIsLoading(false)
+    },
   })
 
   const [showKnowledgeBase, setShowKnowledgeBase] = useState(false)
@@ -43,6 +43,19 @@ export function AICustomerSupport() {
         form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }))
       }
     }, 100)
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value)
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!input.trim() || isLoading) return
+    setIsLoading(true)
+    setChatError(null)
+    sendMessage({ text: input, metadata: { userId } })
+    setInput("")
   }
 
   return (
@@ -77,17 +90,7 @@ export function AICustomerSupport() {
                         message.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted"
                       }`}
                     >
-                      <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
-
-                      {/* 显示工具调用结果 */}
-                      {message.toolInvocations?.map((tool, idx) => (
-                        <div key={idx} className="mt-2 pt-2 border-t border-border/50">
-                          <Badge variant="outline" className="text-xs">
-                            {tool.toolName === "createTicket" && "已创建工单"}
-                            {tool.toolName === "searchKnowledge" && "知识库检索"}
-                          </Badge>
-                        </div>
-                      ))}
+                      <p className="text-sm leading-relaxed whitespace-pre-wrap">{((message as any).content || (message as any).text || "")}</p>
                     </div>
 
                     {message.role === "user" && (
@@ -112,10 +115,10 @@ export function AICustomerSupport() {
             </ScrollArea>
 
             {/* 错误提示 */}
-            {error && (
+            {chatError && (
               <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
-                <AlertDescription>抱歉，发生了错误。请稍后重试或联系人工客服。</AlertDescription>
+                <AlertDescription>{chatError}</AlertDescription>
               </Alert>
             )}
 

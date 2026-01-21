@@ -1,6 +1,13 @@
 /**
- * 智能任务分配算法
- * 使用 AI 模型分析团队成员能力和任务需求，推荐最佳分配方案
+ * @file 任务分配服务
+ * @description 提供AI驱动的任务分配功能
+ * @module lib/ai/task-assignment
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
  */
 
 export interface TeamMember {

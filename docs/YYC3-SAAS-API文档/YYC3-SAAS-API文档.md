@@ -1,4 +1,4 @@
-# YYC³ API 文档
+# YYC³（YanYuCloudCube）SAAS 平台 API 文档
 
 ## 目录
 

@@ -122,7 +122,7 @@ export default function FormDesigner() {
               </Card>
             ))}
 
-            <Button variant="dashed" className="w-full">
+            <Button variant="outline" className="w-full">
               <Plus className="h-4 w-4 mr-2" />
               添加字段
             </Button>

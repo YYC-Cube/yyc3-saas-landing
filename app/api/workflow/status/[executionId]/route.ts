@@ -1,3 +1,15 @@
+/**
+ * @file 工作流状态路由
+ * @description 处理工作流执行状态查询请求
+ * @module api/workflow/status
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 import { type NextRequest, NextResponse } from "next/server"
 import { workflowEngine } from "@/lib/workflow-engine"
 

@@ -1,3 +1,15 @@
+/**
+ * @file 常见问题区域组件
+ * @description 提供常见问题解答展示，支持折叠/展开交互
+ * @component FAQSection
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 "use client"
 
 import { motion } from "framer-motion"

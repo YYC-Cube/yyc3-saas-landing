@@ -1,3 +1,15 @@
+/**
+ * @file 动画行动召唤区域组件
+ * @description 提供具有动画效果的行动召唤区域，引导用户进行下一步操作
+ * @component AnimatedCTASection
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 "use client"
 
 import { useRef } from "react"

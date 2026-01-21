@@ -1,4 +1,4 @@
-# YYC³ 平台架构文档
+# YYC³（YanYuCloudCube）SAAS 平台架构文档
 
 ## 目录
 

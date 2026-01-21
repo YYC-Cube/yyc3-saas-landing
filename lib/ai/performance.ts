@@ -1,6 +1,13 @@
 /**
- * AI 性能优化工具
- * 提供请求去重、批处理和性能监控功能
+ * @file 性能监控服务
+ * @description 提供AI驱动的性能监控功能
+ * @module lib/ai/performance
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
  */
 
 import { getCachedResponse } from "./cache"

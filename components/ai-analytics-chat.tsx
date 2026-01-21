@@ -3,7 +3,6 @@
 import type React from "react"
 
 import { useChat } from "@ai-sdk/react"
-import { DefaultChatTransport, type UIMessage } from "ai"
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -14,13 +13,17 @@ import { DataChart } from "@/components/data-chart"
 export function AIAnalyticsChat() {
   const [input, setInput] = useState("")
   const [error, setError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  const { messages, sendMessage, status, reload } = useChat<UIMessage>({
-    transport: new DefaultChatTransport({ api: "/api/ai/analytics" }),
+  const { messages, sendMessage } = useChat({
     onError: (error) => {
       console.error("[v0] Chat error:", error)
       setError("抱歉，分析请求失败。请稍后重试。")
+      setIsLoading(false)
+    },
+    onFinish: () => {
+      setIsLoading(false)
     },
   })
 
@@ -39,17 +42,15 @@ export function AIAnalyticsChat() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!input.trim() || status === "in_progress") return
+    if (!input.trim()) return
 
     setError(null)
+    setIsLoading(true)
     sendMessage({ text: input })
     setInput("")
   }
 
-  const handleRetry = () => {
-    setError(null)
-    reload()
-  }
+
 
   // 快捷问题示例
   const quickQuestions = [
@@ -69,15 +70,11 @@ export function AIAnalyticsChat() {
             exit={{ opacity: 0, y: -20 }}
             className="mb-4"
           >
-            <Card className="p-4 bg-destructive/10 border-destructive/50 flex items-center justify-between">
+            <Card className="p-4 bg-destructive/10 border-destructive/50 flex items-center">
               <div className="flex items-center gap-3">
                 <AlertCircle className="w-5 h-5 text-destructive" />
                 <p className="text-sm text-destructive">{error}</p>
               </div>
-              <Button variant="ghost" size="sm" onClick={handleRetry} className="gap-2">
-                <RefreshCw className="w-4 h-4" />
-                重试
-              </Button>
             </Card>
           </motion.div>
         )}
@@ -236,30 +233,7 @@ export function AIAnalyticsChat() {
                           )
                         }
 
-                        // 错误状态
-                        if (part.state === "output-error") {
-                          return (
-                            <div key={partIndex} className="mt-2 p-3 bg-destructive/10 rounded-lg text-xs">
-                              <div className="flex items-center gap-2 text-destructive">
-                                <AlertCircle className="w-3 h-3" />
-                                工具调用失败，请重试
-                              </div>
-                            </div>
-                          )
-                        }
 
-                        // 处理中状态
-                        if (part.state === "input-available") {
-                          return (
-                            <div key={partIndex} className="mt-2 p-3 bg-background/50 rounded-lg text-xs">
-                              <div className="flex items-center gap-2 text-muted-foreground">
-                                <Loader2 className="w-3 h-3 animate-spin" />
-                                {part.type === "tool-queryDatabase" && "正在查询数据..."}
-                                {part.type === "tool-generateChart" && "正在生成图表..."}
-                              </div>
-                            </div>
-                          )
-                        }
                       }
 
                       return null
@@ -277,7 +251,7 @@ export function AIAnalyticsChat() {
           )}
 
           {/* 加载指示器 */}
-          {status === "in_progress" && (
+          {isLoading && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3">
               <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                 <Sparkles className="w-4 h-4 text-primary animate-pulse" />
@@ -315,7 +289,7 @@ export function AIAnalyticsChat() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="询问您的数据问题，例如：显示本月销售额趋势..."
               className="w-full px-4 py-3 pr-12 bg-card border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={status === "in_progress"}
+              disabled={isLoading}
               maxLength={500}
             />
             <div className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
@@ -325,10 +299,10 @@ export function AIAnalyticsChat() {
           <Button
             type="submit"
             size="lg"
-            disabled={!input.trim() || status === "in_progress"}
+            disabled={!input.trim() || isLoading}
             className="px-6 transition-all hover:scale-105"
           >
-            {status === "in_progress" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
+            {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
           </Button>
         </div>
         <p className="text-xs text-muted-foreground mt-2 text-center">AI 分析结果仅供参考，实际数据以系统记录为准</p>

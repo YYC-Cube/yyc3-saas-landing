@@ -1,3 +1,15 @@
+/**
+ * @file AI会议纪要路由
+ * @description 处理AI驱动的会议纪要生成请求
+ * @module api/ai/meeting-notes
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 import { generateObject } from "ai"
 import { z } from "zod"
 import { NextResponse } from "next/server"

@@ -1,3 +1,15 @@
+/**
+ * @file 工作流引擎
+ * @description 提供工作流执行和管理功能
+ * @module lib/workflow-engine
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 // 工作流执行引擎
 import { generateText, generateObject } from "ai"
 import { openai } from "@ai-sdk/openai"

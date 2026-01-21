@@ -1,4 +1,4 @@
-# YYC³ - SaaS 智能平台
+# YYC³（YanYuCloudCube）SAAS 平台智能 CRM 系统
 
 <div align="center">
 
@@ -8,15 +8,17 @@
 **Words Initiate Quadrants, Language Serves as Core for the Future**
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.2-blue)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8)](https://tailwindcss.com/)
-[![AI SDK](https://img.shields.io/badge/AI%20SDK-Vercel%20v5-purple)](https://sdk.vercel.ai/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue)](https://www.postgresql.org/)
-[![Redis](https://img.shields.io/badge/Redis-7-red)](https://redis.io/)
-[![Docker](https://img.shields.io/badge/Docker-20.10-blue)](https://www.docker.com/)
-[![Vercel](https://img.shields.io/badge/Vercel-Deployed-green)](https://vercel.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.2-blue?style=flat&logo=react&logoColor=white)](https://react.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?style=flat&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![AI SDK](https://img.shields.io/badge/AI%20SDK-Vercel%20v5-purple?style=flat&logo=openai&logoColor=white)](https://sdk.vercel.ai/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?style=flat&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Redis](https://img.shields.io/badge/Redis-7-red?style=flat&logo=redis&logoColor=white)](https://redis.io/)
+[![Docker](https://img.shields.io/badge/Docker-20.10-blue?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Vercel](https://img.shields.io/badge/Vercel-Deployed-green?style=flat&logo=vercel&logoColor=white)](https://vercel.com/)
+[![ESLint](https://img.shields.io/badge/ESLint-8-blue?style=flat&logo=eslint&logoColor=white)](https://eslint.org/)
+[![Prettier](https://img.shields.io/badge/Prettier-3-blue?style=flat&logo=prettier&logoColor=white)](https://prettier.io/)
 
 [功能特性](#功能特性) • [快速开始](#快速开始) • [文档](#文档) • [贡献](#贡献) • [许可证](#许可证)
 
@@ -26,7 +28,7 @@
 
 ## 项目简介
 
-YYC³ 是一个现代化的企业级 SaaS 平台，专注于为企业提供 AI 驱动的智能化业务管理解决方案。通过整合智能数据分析、AI 协作助手、智能客服和工作流自动化，帮助企业实现数字化转型与业务增长。
+YYC³（YanYuCloudCube）是一个现代化的企业级 SaaS 平台，专注于为企业提供 AI 驱动的智能化业务管理解决方案。通过整合智能数据分析、AI 协作助手、智能客服和工作流自动化，帮助企业实现数字化转型与业务增长。
 
 ## 功能特性
 
@@ -53,14 +55,21 @@ YYC³ 是一个现代化的企业级 SaaS 平台，专注于为企业提供 AI �
 - 工单自动创建
 - 情感分析
 
-#### 4. 工作流自动化
+#### 4. 智能预测引擎
+
+- 销售预测分析
+- 客户流失预警
+- 业务趋势预测
+- 智能推荐系统
+
+#### 5. 工作流自动化
 
 - 可视化工作流设计
 - AI 流程优化分析
 - 自动化规则生成
 - 执行监控和分析
 
-#### 5. 数据隐私与安全
+#### 6. 数据隐私与安全
 
 - 数据脱敏处理
 - 隐私设置管理
@@ -88,7 +97,7 @@ YYC³ 是一个现代化的企业级 SaaS 平台，专注于为企业提供 AI �
 
 # 克隆仓库
 
-git clone <https://github.com/YYC-Cube/yyc3-saas-landing.git>
+git clone https://github.com/YYC-Cube/yyc3-saas-landing.git
 cd yyc3-saas-landing
 
 # 安装依赖
@@ -272,7 +281,7 @@ docker run -p 3200:3200 yyc3-saas
 - **邮箱**: <support@yyc3.app>
 - **文档**: <https://docs.yyc3.app>
 - **社区**: <https://community.yyc3.app>
-- **GitHub**: <https://github.com/your-org/yyc3-saas>
+- **GitHub**: <https://github.com/YYC-Cube/yyc3-saas-landing.git>
 
 ## 致谢
 

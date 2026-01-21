@@ -1,3 +1,15 @@
+/**
+ * @file 客户洞察引擎
+ * @description 提供AI驱动的客户洞察功能
+ * @module lib/ai/customer-insights
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 // 客户洞察分析引擎
 
 export interface CustomerInsight {

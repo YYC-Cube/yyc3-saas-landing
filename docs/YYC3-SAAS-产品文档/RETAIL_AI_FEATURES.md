@@ -1,4 +1,4 @@
-# YYC³ 实体销售服务行业 AI 智能功能拓展方案
+# YYC³（YanYuCloudCube）SAAS 平台实体销售服务行业 AI 智能功能拓展方案
 
 ## 项目概述
 

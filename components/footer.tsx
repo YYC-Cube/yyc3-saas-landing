@@ -1,3 +1,15 @@
+/**
+ * @file 底部组件
+ * @description 提供页脚信息展示，包括版权、链接和联系方式
+ * @component Footer
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 import { YYC3Logo } from "./yyc3-logo"
 
 export function Footer() {

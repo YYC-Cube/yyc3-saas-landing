@@ -1,6 +1,13 @@
 /**
- * AI 成本控制工具
- * 提供使用限制、预算管理和成本优化功能
+ * @file 成本控制服务
+ * @description 提供AI驱动的成本控制功能
+ * @module lib/ai/cost-control
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
  */
 
 export interface UsageLimit {

@@ -1,6 +1,13 @@
 /**
- * 安全审计工具
- * 提供审计日志、异常检测和安全监控功能
+ * @file 安全审计服务
+ * @description 提供AI驱动的安全审计功能
+ * @module lib/ai/security-audit
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
  */
 
 export interface SecurityEvent {

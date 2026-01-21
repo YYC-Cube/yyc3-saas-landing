@@ -1,4 +1,4 @@
-# YYC³ 环境变量配置指南
+# YYC³（YanYuCloudCube）SAAS 平台环境变量配置指南
 
 本文档详细说明 YYC³ SaaS 平台所需的所有环境变量配置。
 

@@ -1,3 +1,15 @@
+/**
+ * @file 工作流优化器
+ * @description 提供AI驱动的工作流优化功能
+ * @module lib/ai/workflow-optimizer
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 // AI 工作流优化分析器
 import { generateObject } from "ai"
 import { openai } from "@ai-sdk/openai"

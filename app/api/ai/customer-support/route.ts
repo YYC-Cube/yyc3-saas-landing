@@ -1,4 +1,16 @@
-import { streamText, tool } from "ai"
+/**
+ * @file AI客户支持路由
+ * @description 处理AI驱动的客户支持请求
+ * @module api/ai/customer-support
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
+import { streamText } from "ai"
 import { z } from "zod"
 import { searchKnowledgeBase } from "@/lib/knowledge-base"
 
@@ -50,7 +62,10 @@ export async function POST(req: Request) {
     const { messages, userId } = await req.json()
 
     if (!messages || !Array.isArray(messages)) {
-      return Response.json({ error: "无效的消息格式" }, { status: 400 })
+      return new Response(JSON.stringify({ error: "无效的消息格式" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      })
     }
 
     // 获取用户上下文
@@ -83,51 +98,17 @@ ${relevantDocs.map((doc) => `【${doc.category}】${doc.title}\n${doc.content.sl
 
 注意：如果无法解决问题，主动建议创建工单或联系人工客服。`,
       messages,
-      tools: {
-        searchKnowledge: tool({
-          description: "搜索知识库文档，查找相关帮助信息",
-          parameters: z.object({
-            query: z.string().describe("搜索关键词或问题描述"),
-          }),
-          execute: async ({ query }) => {
-            const docs = searchKnowledgeBase(query, 3)
-            return {
-              results: docs.map((doc) => ({
-                title: doc.title,
-                category: doc.category,
-                content: doc.content.slice(0, 500),
-                tags: doc.tags,
-              })),
-              count: docs.length,
-            }
-          },
-        }),
-        createTicket: tool({
-          description: "为用户创建支持工单，用于需要人工处理的复杂问题",
-          parameters: z.object({
-            title: z.string().describe("工单标题，简要描述问题"),
-            description: z.string().describe("问题详细描述"),
-            priority: z
-              .enum(["low", "medium", "high", "urgent"])
-              .describe("优先级：low=低，medium=中，high=高，urgent=紧急"),
-          }),
-          execute: async ({ title, description, priority }) => {
-            const ticket = await createSupportTicket({
-              userId: userContext.id,
-              title,
-              description,
-              priority,
-            })
-            return ticket
-          },
-        }),
-      },
-      maxSteps: 5,
+
     })
 
     return result.toUIMessageStreamResponse()
   } catch (error) {
     console.error("[v0] 客服 API 错误:", error)
-    return Response.json({ error: "服务暂时不可用，请稍后重试" }, { status: 500 })
+    return new Response(JSON.stringify({ error: "服务暂时不可用，请稍后重试" }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
   }
 }

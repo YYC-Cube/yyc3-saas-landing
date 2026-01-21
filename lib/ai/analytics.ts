@@ -1,6 +1,13 @@
 /**
- * AI 使用分析工具
- * 提供使用统计、成本分析和性能监控功能
+ * @file AI使用分析工具
+ * @description 提供使用统计、成本分析和性能监控功能
+ * @module lib/ai/analytics
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
  */
 
 export interface AIUsageLog {

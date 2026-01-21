@@ -4,9 +4,9 @@
 @file YYC3-SAAS-LANDING.py
 @description YYC3-SAAS 全文档架构一键生成脚本，用于生成符合YYC3标准的完整文档架构，支持文档内容验证和自动更新功能
 @author YanYuCloudCube Team
-@version v1.0.0
+@version v1.1.0
 @created 2025-12-29
-@updated 2025-12-29
+@updated 2026-01-22
 @copyright Copyright (c) 2025 YYC3
 @license MIT
 """
@@ -18,6 +18,16 @@ import argparse
 import re
 import datetime
 import json
+import logging
+
+# 配置日志
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+
+logger = logging.getLogger(__name__)
 
 # ===================== 核心配置区 =====================
 # 文档根目录
@@ -664,19 +674,43 @@ def create_dir(path):
     """创建目录，不存在则创建"""
     try:
         if not os.path.exists(path):
+            logger.info(f"创建目录: {path}")
             os.makedirs(path)
+        else:
+            logger.debug(f"目录已存在: {path}")
+    except PermissionError as e:
+        logger.error(f"创建目录权限不足: {path}")
+        raise Exception(f"创建目录权限不足: {path}, 错误: {str(e)}")
+    except OSError as e:
+        logger.error(f"创建目录失败: {path}, 错误: {str(e)}")
+        raise Exception(f"创建目录失败: {path}, 错误: {str(e)}")
     except Exception as e:
+        logger.error(f"创建目录时发生未知错误: {path}, 错误: {str(e)}")
         raise Exception(f"创建目录失败: {path}, 错误: {str(e)}")
 
 def write_file(path, content, encoding=ENCODING):
     """写入文件，覆盖原有内容"""
     try:
+        # 确保目录存在
+        dir_path = os.path.dirname(path)
+        if dir_path and not os.path.exists(dir_path):
+            create_dir(dir_path)
+
+        logger.debug(f"写入文件: {path}")
         with open(path, "w", encoding=encoding) as f:
             f.write(content)
+        logger.info(f"文件写入成功: {path}")
+    except PermissionError as e:
+        logger.error(f"写入文件权限不足: {path}")
+        raise Exception(f"写入文件权限不足: {path}, 错误: {str(e)}")
+    except OSError as e:
+        logger.error(f"写入文件失败: {path}, 错误: {str(e)}")
+        raise Exception(f"写入文件失败: {path}, 错误: {str(e)}")
     except Exception as e:
+        logger.error(f"写入文件时发生未知错误: {path}, 错误: {str(e)}")
         raise Exception(f"写入文件失败: {path}, 错误: {str(e)}")
 
-def validate_path(path):
+def validate_path(path, base_dir=None):
     """验证路径安全性，防止路径遍历攻击"""
     # 规范化路径
     normalized_path = os.path.normpath(path)
@@ -688,6 +722,19 @@ def validate_path(path):
     # 检查路径是否为绝对路径
     if not os.path.isabs(normalized_path):
         normalized_path = os.path.abspath(normalized_path)
+
+    # 如果提供了基础目录，确保路径在基础目录内
+    if base_dir:
+        base_dir = os.path.abspath(base_dir)
+        # 检查路径是否在基础目录内
+        if not os.path.commonpath([base_dir, normalized_path]) == base_dir:
+            raise Exception(f"路径不在基础目录内: {path}")
+
+    # 检查路径是否包含非法字符
+    illegal_chars = ['<', '>', ':', '"', '|', '?', '*']
+    for char in illegal_chars:
+        if char in normalized_path:
+            raise Exception(f"路径包含非法字符: {char}")
 
     return normalized_path
 
@@ -712,6 +759,7 @@ def generate_project(root_dir, version, creation_date, status, encoding):
     try:
         # 验证并规范化根目录路径
         root_dir = validate_path(root_dir)
+        logger.info(f"已验证根目录路径: {root_dir}")
         print(f"🔒 已验证根目录路径: {root_dir}")
 
         # 创建根目录
@@ -725,6 +773,7 @@ def generate_project(root_dir, version, creation_date, status, encoding):
 
         print(f"📊 任务统计: {total_categories} 个分类, {total_docs} 个文档")
         print("="*80)
+        logger.info(f"开始生成文档架构: {total_categories} 个分类, {total_docs} 个文档")
 
         # 预先计算模板中不变的部分
         base_template_values = {
@@ -738,14 +787,12 @@ def generate_project(root_dir, version, creation_date, status, encoding):
             current_category += 1
             try:
                 # 创建分类目录
-                cate_dir = os.path.join(root_dir, "YYC3-LP-{}".format(doc_category))
-                # 验证分类目录路径
-                cate_dir = validate_path(cate_dir)
-                # 确保分类目录在根目录内
-                if not os.path.commonpath([root_dir, cate_dir]) == root_dir:
-                    raise Exception(f"分类目录不在根目录内: {cate_dir}")
+                cate_dir = os.path.join(root_dir, "YYC3-SAAS-{}".format(doc_category))
+                # 验证分类目录路径，确保在根目录内
+                cate_dir = validate_path(cate_dir, base_dir=root_dir)
 
                 create_dir(cate_dir)
+                logger.info(f"创建分类目录: {cate_dir}")
                 print(f"📂 [{current_category}/{total_categories}] 创建目录: {cate_dir}")
 
                 # 生成该目录下的所有文档
@@ -755,11 +802,8 @@ def generate_project(root_dir, version, creation_date, status, encoding):
                         # 拼接文件名和标题
                         file_name = "{}-YYC3-SAAS-{}-{}.md".format(doc_no, doc_category, doc_name)
                         file_path = os.path.join(cate_dir, file_name)
-                        # 验证文件路径
-                        file_path = validate_path(file_path)
-                        # 确保文件路径在根目录内
-                        if not os.path.commonpath([root_dir, file_path]) == root_dir:
-                            raise Exception(f"文件路径不在根目录内: {file_path}")
+                        # 验证文件路径，确保在根目录内
+                        file_path = validate_path(file_path, base_dir=root_dir)
                         title = "{}-YYC3-SAAS-{}-{}".format(doc_no, doc_category, doc_name)
 
                         # 替换模板占位符
@@ -780,17 +824,15 @@ def generate_project(root_dir, version, creation_date, status, encoding):
                         progress = int((current_doc / total_docs) * 100)
                         print(f"  ✍️ [{current_doc}/{total_docs}] ({progress}%) 生成文档: {file_name}")
                     except Exception as e:
+                        logger.error(f"生成文档失败: {file_name}, 错误: {str(e)}")
                         raise Exception(f"生成文档失败: {file_name}, 错误: {str(e)}")
 
                 # 生成该目录下的 README.md 索引文档
                 try:
                     readme_name = "README.md"
                     readme_path = os.path.join(cate_dir, readme_name)
-                    # 验证README文件路径
-                    readme_path = validate_path(readme_path)
-                    # 确保README文件路径在根目录内
-                    if not os.path.commonpath([root_dir, readme_path]) == root_dir:
-                        raise Exception(f"README文件路径不在根目录内: {readme_path}")
+                    # 验证README文件路径，确保在根目录内
+                    readme_path = validate_path(readme_path, base_dir=root_dir)
                     readme_desc = "{}分类下所有文档的索引与说明，统一管理文档清单".format(doc_category)
                     readme_tags = "[{}],[文档索引],[目录总览]".format(doc_category)
 
@@ -804,12 +846,18 @@ def generate_project(root_dir, version, creation_date, status, encoding):
 
                     readme_content = README_MD_TEMPLATE.format(**readme_template_values)
                     write_file(readme_path, readme_content, encoding)
+                    logger.info(f"生成README索引: {readme_path}")
                     print(f"  📑 生成索引: {readme_name}")
                     print("-"*80)
                 except Exception as e:
+                    logger.error(f"生成README索引失败: {doc_category}, 错误: {str(e)}")
                     raise Exception(f"生成README索引失败: {doc_category}, 错误: {str(e)}")
             except Exception as e:
+                logger.error(f"处理分类目录失败: {doc_category}, 错误: {str(e)}")
                 raise Exception(f"处理分类目录失败: {doc_category}, 错误: {str(e)}")
+
+        # 验证生成的文档结构
+        validate_document_structure(root_dir)
 
         print("="*80)
         print("🎉 生成完成！")
@@ -831,8 +879,108 @@ def generate_project(root_dir, version, creation_date, status, encoding):
         print("   • 根据实际项目需求修改文档内容")
         print("   • 定期更新文档以保持与项目同步")
         print("="*80)
+        logger.info(f"文档架构生成完成: {total_docs + total_categories} 个文件")
     except Exception as e:
+        logger.error(f"生成文档架构失败: {str(e)}")
         raise Exception(f"生成文档架构失败: {str(e)}")
+
+
+def validate_document_structure(root_dir):
+    """验证生成的文档结构是否与PROJECT_STRUCT一致"""
+    print("\n🔍 验证文档结构...")
+    logger.info(f"开始验证文档结构: {root_dir}")
+
+    try:
+        # 计算预期的文档数量
+        expected_categories = len(PROJECT_STRUCT)
+        expected_docs = sum(len(doc_list) for _, doc_list in PROJECT_STRUCT.items())
+        expected_total = expected_docs + expected_categories  # 加上README文件
+
+        # 统计实际生成的文档数量
+        actual_categories = 0
+        actual_docs = 0
+        actual_readmes = 0
+
+        for root, dirs, files in os.walk(root_dir):
+            # 统计分类目录
+            if root != root_dir:
+                actual_categories += 1
+
+            # 统计文档和README文件
+            for file in files:
+                if file.endswith('.md'):
+                    if file == 'README.md':
+                        actual_readmes += 1
+                    else:
+                        actual_docs += 1
+
+        actual_total = actual_docs + actual_readmes
+
+        # 验证数量是否一致
+        print(f"\n📊 文档结构验证结果:")
+        print(f"   • 预期分类目录: {expected_categories} 个")
+        print(f"   • 实际分类目录: {actual_categories} 个")
+        print(f"   • 预期业务文档: {expected_docs} 个")
+        print(f"   • 实际业务文档: {actual_docs} 个")
+        print(f"   • 预期README索引: {expected_categories} 个")
+        print(f"   • 实际README索引: {actual_readmes} 个")
+        print(f"   • 预期总文件数: {expected_total} 个")
+        print(f"   • 实际总文件数: {actual_total} 个")
+
+        # 检查是否所有分类都已生成
+        missing_categories = []
+        for category in PROJECT_STRUCT.keys():
+            category_dir = os.path.join(root_dir, f"YYC3-SAAS-{category}")
+            if not os.path.exists(category_dir):
+                missing_categories.append(category)
+
+        if missing_categories:
+            print(f"\n❌ 缺少分类目录: {missing_categories}")
+            logger.error(f"缺少分类目录: {missing_categories}")
+            raise Exception(f"文档结构验证失败: 缺少分类目录 {missing_categories}")
+
+        # 检查是否所有文档都已生成
+        missing_docs = []
+        for category, doc_list in PROJECT_STRUCT.items():
+            category_dir = os.path.join(root_dir, f"YYC3-SAAS-{category}")
+            for doc_no, doc_name, _, _ in doc_list:
+                doc_file = f"{doc_no}-YYC3-SAAS-{category}-{doc_name}.md"
+                doc_path = os.path.join(category_dir, doc_file)
+                if not os.path.exists(doc_path):
+                    missing_docs.append(f"{category}/{doc_file}")
+
+        if missing_docs:
+            print(f"\n❌ 缺少文档: {missing_docs}")
+            logger.error(f"缺少文档: {missing_docs}")
+            raise Exception(f"文档结构验证失败: 缺少文档 {missing_docs}")
+
+        # 检查是否所有分类都有README文件
+        missing_readmes = []
+        for category in PROJECT_STRUCT.keys():
+            category_dir = os.path.join(root_dir, f"YYC3-SAAS-{category}")
+            readme_path = os.path.join(category_dir, "README.md")
+            if not os.path.exists(readme_path):
+                missing_readmes.append(category)
+
+        if missing_readmes:
+            print(f"\n❌ 缺少README文件: {missing_readmes}")
+            logger.error(f"缺少README文件: {missing_readmes}")
+            raise Exception(f"文档结构验证失败: 缺少README文件 {missing_readmes}")
+
+        # 验证通过
+        if (actual_categories == expected_categories and
+            actual_docs == expected_docs and
+            actual_readmes == expected_categories):
+            print("\n✅ 文档结构验证通过！")
+            logger.info("文档结构验证通过，所有预期的文档和目录都已生成")
+        else:
+            print("\n❌ 文档数量不匹配！")
+            logger.error(f"文档数量不匹配: 预期 {expected_total} 个文件，实际 {actual_total} 个文件")
+            raise Exception(f"文档结构验证失败: 文档数量不匹配")
+
+    except Exception as e:
+        logger.error(f"验证文档结构时发生错误: {str(e)}")
+        raise Exception(f"验证文档结构失败: {str(e)}")
 
 def parse_args():
     """解析命令行参数"""
@@ -883,70 +1031,88 @@ def validate_all_documents(args):
 
     print(f"\n[1/2] 开始验证文档...")
     print(f"文档根目录: {os.path.abspath(DOCUMENT_ROOT)}")
+    logger.info(f"开始验证文档，根目录: {os.path.abspath(DOCUMENT_ROOT)}")
 
     # 遍历所有文档
     valid_count = 0
     invalid_count = 0
     total_count = 0
 
-    for root, _, files in os.walk(DOCUMENT_ROOT):
-        for file in files:
-            if file.endswith('.md'):
-                total_count += 1
-                file_path = os.path.join(root, file)
+    try:
+        for root, _, files in os.walk(DOCUMENT_ROOT):
+            for file in files:
+                if file.endswith('.md'):
+                    total_count += 1
+                    file_path = os.path.join(root, file)
 
-                print(f"\n验证文档: {os.path.relpath(file_path, DOCUMENT_ROOT)}")
+                    print(f"\n验证文档: {os.path.relpath(file_path, DOCUMENT_ROOT)}")
+                    logger.info(f"验证文档: {os.path.relpath(file_path, DOCUMENT_ROOT)}")
 
-                # 验证格式
-                if args.check_format:
-                    valid, message = validate_document_format(file_path, args.verbose)
-                    if not valid:
-                        print(f"  ❌ 格式验证失败: {message}")
-                        invalid_count += 1
-                        continue
-                    else:
-                        print(f"  ✅ 格式验证通过: {message}")
+                    # 验证格式
+                    if args.check_format:
+                        valid, message = validate_document_format(file_path, args.verbose)
+                        if not valid:
+                            print(f"  ❌ 格式验证失败: {message}")
+                            logger.error(f"格式验证失败: {file_path} - {message}")
+                            invalid_count += 1
+                            continue
+                        else:
+                            print(f"  ✅ 格式验证通过: {message}")
+                            logger.debug(f"格式验证通过: {file_path}")
 
-                # 验证头部信息
-                if args.check_headers:
-                    valid, message = validate_document_headers(file_path, args.verbose)
-                    if not valid:
-                        print(f"  ❌ 头部信息验证失败: {message}")
-                        invalid_count += 1
-                        continue
-                    else:
-                        print(f"  ✅ 头部信息验证通过: {message}")
+                    # 验证头部信息
+                    if args.check_headers:
+                        valid, message = validate_document_headers(file_path, args.verbose)
+                        if not valid:
+                            print(f"  ❌ 头部信息验证失败: {message}")
+                            logger.error(f"头部信息验证失败: {file_path} - {message}")
+                            invalid_count += 1
+                            continue
+                        else:
+                            print(f"  ✅ 头部信息验证通过: {message}")
+                            logger.debug(f"头部信息验证通过: {file_path}")
 
-                # 验证内容
-                if args.check_content:
-                    valid, message = validate_document_content(file_path, args.verbose)
-                    if not valid:
-                        print(f"  ❌ 内容验证失败: {message}")
-                        invalid_count += 1
-                        continue
-                    else:
-                        print(f"  ✅ 内容验证通过: {message}")
+                    # 验证内容
+                    if args.check_content:
+                        valid, message = validate_document_content(file_path, args.verbose)
+                        if not valid:
+                            print(f"  ❌ 内容验证失败: {message}")
+                            logger.error(f"内容验证失败: {file_path} - {message}")
+                            invalid_count += 1
+                            continue
+                        else:
+                            print(f"  ✅ 内容验证通过: {message}")
+                            logger.debug(f"内容验证通过: {file_path}")
 
-                # 检查链接
-                if args.check_links:
-                    valid, message = check_links(file_path, args.verbose)
-                    if not valid:
-                        print(f"  ❌ 链接检查失败: {message}")
-                        invalid_count += 1
-                        continue
-                    else:
-                        print(f"  ✅ 链接检查通过: {message}")
+                    # 检查链接
+                    if args.check_links:
+                        valid, message = check_links(file_path, args.verbose)
+                        if not valid:
+                            print(f"  ❌ 链接检查失败: {message}")
+                            logger.error(f"链接检查失败: {file_path} - {message}")
+                            invalid_count += 1
+                            continue
+                        else:
+                            print(f"  ✅ 链接检查通过: {message}")
+                            logger.debug(f"链接检查通过: {file_path}")
 
-                valid_count += 1
-                if total_count % 10 == 0:
-                    print(f"\n已验证 {total_count} 个文档...")
+                    valid_count += 1
+                    logger.info(f"文档验证通过: {file_path}")
+                    if total_count % 10 == 0:
+                        print(f"\n已验证 {total_count} 个文档...")
+                        logger.info(f"已验证 {total_count} 个文档")
 
-    print("\n====================================")
-    print(f"文档验证完成!")
-    print(f"总文档数: {total_count}")
-    print(f"验证通过: {valid_count}")
-    print(f"验证失败: {invalid_count}")
-    print("====================================")
+        print("\n====================================")
+        print(f"文档验证完成!")
+        print(f"总文档数: {total_count}")
+        print(f"验证通过: {valid_count}")
+        print(f"验证失败: {invalid_count}")
+        print("====================================")
+        logger.info(f"文档验证完成: 总文档数={total_count}, 验证通过={valid_count}, 验证失败={invalid_count}")
+    except Exception as e:
+        logger.error(f"验证文档时发生错误: {str(e)}")
+        print(f"\n❌ 验证过程中发生错误: {str(e)}")
+
 
 def update_all_documents(args):
     """更新所有文档"""
@@ -960,6 +1126,7 @@ def update_all_documents(args):
     print(f"更新日期: {args.update_date}")
     print(f"新版本号: {args.new_version or '自动增加'}")
     print(f"试运行: {args.dry_run}")
+    logger.info(f"开始更新文档，根目录: {os.path.abspath(DOCUMENT_ROOT)}, 更新版本: {args.update_version}, 更新日期: {args.update_date}")
 
     # 遍历所有文档
     updated_count = 0
@@ -967,45 +1134,55 @@ def update_all_documents(args):
     failed_count = 0
     total_count = 0
 
-    for root, _, files in os.walk(DOCUMENT_ROOT):
-        for file in files:
-            if file.endswith('.md'):
-                total_count += 1
-                file_path = os.path.join(root, file)
+    try:
+        for root, _, files in os.walk(DOCUMENT_ROOT):
+            for file in files:
+                if file.endswith('.md'):
+                    total_count += 1
+                    file_path = os.path.join(root, file)
 
-                try:
-                    success, message = update_document(
-                        file_path,
-                        new_version=args.new_version,
-                        update_version=args.update_version,
-                        update_date=args.update_date,
-                        dry_run=args.dry_run,
-                        verbose=args.verbose
-                    )
+                    try:
+                        success, message = update_document(
+                            file_path,
+                            new_version=args.new_version,
+                            update_version=args.update_version,
+                            update_date=args.update_date,
+                            dry_run=args.dry_run,
+                            verbose=args.verbose
+                        )
 
-                    if success:
-                        if '无需更新' not in message:
-                            updated_count += 1
+                        if success:
+                            if '无需更新' not in message:
+                                updated_count += 1
+                                logger.info(f"文档更新成功: {file_path} - {message}")
+                            else:
+                                skipped_count += 1
+                                logger.debug(f"文档无需更新: {file_path}")
                         else:
-                            skipped_count += 1
-                    else:
-                        print(f"更新失败: {os.path.relpath(file_path, DOCUMENT_ROOT)} - {message}")
+                            print(f"更新失败: {os.path.relpath(file_path, DOCUMENT_ROOT)} - {message}")
+                            logger.error(f"文档更新失败: {file_path} - {message}")
+                            failed_count += 1
+
+                    except Exception as e:
+                        print(f"更新异常: {os.path.relpath(file_path, DOCUMENT_ROOT)} - {str(e)}")
+                        logger.error(f"更新文档时发生异常: {file_path} - {str(e)}")
                         failed_count += 1
 
-                except Exception as e:
-                    print(f"更新异常: {os.path.relpath(file_path, DOCUMENT_ROOT)} - {str(e)}")
-                    failed_count += 1
+                    if total_count % 10 == 0:
+                        print(f"\n已处理 {total_count} 个文档...")
+                        logger.info(f"已处理 {total_count} 个文档")
 
-                if total_count % 10 == 0:
-                    print(f"\n已处理 {total_count} 个文档...")
-
-    print("\n====================================")
-    print(f"文档更新完成!")
-    print(f"总文档数: {total_count}")
-    print(f"更新成功: {updated_count}")
-    print(f"无需更新: {skipped_count}")
-    print(f"更新失败: {failed_count}")
-    print("====================================")
+        print("\n====================================")
+        print(f"文档更新完成!")
+        print(f"总文档数: {total_count}")
+        print(f"更新成功: {updated_count}")
+        print(f"无需更新: {skipped_count}")
+        print(f"更新失败: {failed_count}")
+        print("====================================")
+        logger.info(f"文档更新完成: 总文档数={total_count}, 更新成功={updated_count}, 无需更新={skipped_count}, 更新失败={failed_count}")
+    except Exception as e:
+        logger.error(f"更新文档时发生错误: {str(e)}")
+        print(f"\n❌ 更新过程中发生错误: {str(e)}")
 
 # ===================== 执行入口 =====================
 if __name__ == "__main__":

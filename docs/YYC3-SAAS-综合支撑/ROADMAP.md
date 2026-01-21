@@ -1,4 +1,4 @@
-# YYC³ SaaS 产品路线图
+# YYC³（YanYuCloudCube） SaaS 平台产品路线图
 
 ## 2024 Q4 - 基础功能完善
 

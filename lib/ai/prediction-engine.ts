@@ -1,3 +1,15 @@
+/**
+ * @file 预测引擎
+ * @description 提供AI驱动的业务预测功能
+ * @module lib/ai/prediction-engine
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 // AI 预测引擎核心库
 
 export interface ChurnPrediction {

@@ -1,3 +1,15 @@
+/**
+ * @file AI预测路由
+ * @description 处理AI驱动的业务预测请求
+ * @module api/ai/predict
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 import { type NextRequest, NextResponse } from "next/server"
 import { predictionEngine } from "@/lib/ai/prediction-engine"
 

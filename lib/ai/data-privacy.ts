@@ -1,6 +1,13 @@
 /**
- * 数据隐私保护工具库
- * 提供数据脱敏、敏感信息检测和隐私保护功能
+ * @file 数据隐私设置
+ * @description 提供AI数据隐私管理功能
+ * @module lib/ai/data-privacy
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
  */
 
 // 敏感字段列表
@@ -61,7 +68,7 @@ export function sanitizeData<T extends Record<string, any>>(data: T): T {
   }
 
   if (Array.isArray(data)) {
-    return data.map((item) => sanitizeData(item)) as T
+    return data.map((item) => sanitizeData(item)) as unknown as T
   }
 
   const sanitized = {} as T

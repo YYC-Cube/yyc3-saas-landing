@@ -1,4 +1,4 @@
-# 数据库配置指南
+# YYC³（YanYuCloudCube）SAAS 平台数据库配置指南
 
 ## 当前配置
 
