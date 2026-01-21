@@ -105,7 +105,7 @@ cp .env.example .env.local
 
 pnpm dev
 
-# 在浏览器中打开 <http://localhost:3000>
+# 在浏览器中打开 <http://localhost:3200>
 
 \`\`\`
 
@@ -232,7 +232,7 @@ docker build -t yyc3-saas .
 
 # 运行容器
 
-docker run -p 3000:3000 yyc3-saas
+docker run -p 3200:3200 yyc3-saas
 \`\`\`
 
 查看 [DEPLOYMENT.md](./DEPLOYMENT.md) 了解详细部署指南。
