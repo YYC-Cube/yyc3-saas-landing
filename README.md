@@ -4,7 +4,7 @@
 
 ![YYC³ Banner](./public/yyc3-banner-nexus-v1.0.0-dark2-1800x400.png)
 
-**万象归元于云枢，深栈智启新纪元**
+**万象归元于云枢 | 深栈智启新纪元**
 
 ***Words Initiate Quadrants, Language Serves as Core for the Future***
 
