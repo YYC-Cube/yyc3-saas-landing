@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![YYC³ Banner](./public/yyc3-banner-nexus-v1.0.0-dark2-1800x400.png)
+![YYC³ Banner](./public/yyc3-saas.png)
 
 **万象归元于云枢，深栈智启新纪元**
 
@@ -98,7 +98,7 @@ YYC³（YanYuCloudCube）是一个现代化的企业级 SaaS 平台，专注于�
 
 # 克隆仓库
 
-git clone https://github.com/YYC-Cube/yyc3-saas-landing.git
+git clone <https://github.com/YYC-Cube/yyc3-saas-landing.git>
 cd yyc3-saas-landing
 
 # 安装依赖
