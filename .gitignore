@@ -1,27 +1,185 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# ============================================
+# YYC³ SaaS Landing - .gitignore
+# 完整配置版本 v1.0.0
+# Last Updated: 2026-05-24
+# ============================================
 
-# dependencies
+# ------------------------------------------
+# Dependencies (依赖)
+# ------------------------------------------
 /node_modules
+.pnpm-store
 
-# next.js
+# ------------------------------------------
+# Next.js (构建输出)
+# ------------------------------------------
 /.next/
 /out/
+/build/
 
-# production
-/build
+# ------------------------------------------
+# Environment Variables (环境变量)
+# ------------------------------------------
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
 
-# debug
+# ------------------------------------------
+# Debug & Log Files (调试与日志)
+# ------------------------------------------
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+*.log
+logs/
 
-# env files
-.env*
+# ------------------------------------------
+# IDE & Editor (编辑器配置)
+# ------------------------------------------
+.idea/
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+*.sublime-project
 
-# vercel
-.vercel
+# ------------------------------------------
+# OS Generated Files (操作系统生成文件)
+# ------------------------------------------
 
-# typescript
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+ Icon?
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ------------------------------------------
+# TypeScript (TypeScript 编译缓存)
+# ------------------------------------------
 *.tsbuildinfo
 next-env.d.ts
+tsconfig.tsbuildinfo
+
+# ------------------------------------------
+# Testing (测试相关)
+# ------------------------------------------
+coverage/
+.nyc_output/
+.jest/
+*.lcov
+test-results/
+
+# ------------------------------------------
+# Cache (各种缓存)
+# ------------------------------------------
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+*.cache
+node_modules/.cache
+.turbo
+
+# ------------------------------------------
+# Misc (其他杂项)
+# ------------------------------------------
+
+# Vercel
+.vercel
+
+# Pnpm
+.pnpm-file.js
+
+# Backup files (备份文件)
+**/_api_backup*/
+**/*.bak
+**/*.backup
+**/*~
+**/backup*/
+
+# Temporary files (临时文件)
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Lock files (可选：如果团队使用相同 pnpm 版本可以提交)
+# pnpm-lock.yaml
+
+# Build artifacts (构建产物)
+dist/
+*.tgz
+*.tar.gz
+
+# Storybook
+storybook-static/
+
+# Turbo
+.turbo/
+
+# ------------------------------------------
+# Security (安全敏感文件)
+# ------------------------------------------
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+secrets/
+credentials/
+*.secret
+
+# ------------------------------------------
+# Project Specific (项目特定)
+# ------------------------------------------
+# API backups created during static export migration
+app/_api_backup*/
+
+# Local development (本地开发)
+.local/
+dev.db
+*.db-journal
+
+# ------------------------------------------
+# Documentation (文档生成)
+# ------------------------------------------
+docs/generated-api/
+typedoc/
+
+# ------------------------------------------
+# CI/CD (持续集成临时文件)
+# ------------------------------------------
+.github/workflows/*/tmp/

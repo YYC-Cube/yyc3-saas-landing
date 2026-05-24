@@ -10,7 +10,7 @@
  * @license MIT
  */
 
-import { YYC3Logo } from "./yyc3-logo"
+import { YYC3Logo } from "./yyc3-logo.dynamic"
 
 export function Footer() {
   return (

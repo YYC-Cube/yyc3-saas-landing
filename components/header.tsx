@@ -13,7 +13,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { YYC3Logo } from "./yyc3-logo"
+import { YYC3Logo } from "./yyc3-logo.dynamic"
 import { Button } from "./ui/button"
 
 export function Header() {

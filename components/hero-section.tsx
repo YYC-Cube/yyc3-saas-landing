@@ -11,7 +11,7 @@
  */
 
 import { Button } from "./ui/button"
-import { ParticleTextEffect } from "./particle-text-effect"
+import { ParticleTextEffect } from "./particle-text-effect.dynamic"
 import { InfiniteSlider } from "./ui/infinite-slider"
 import { ProgressiveBlur } from "./ui/progressive-blur"
 
