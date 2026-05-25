@@ -10,14 +10,14 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat&logo=next.js&logoColor=white)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.2-blue?style=flat&logo=react&logoColor=white)](https://react.dev/)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-blue?style=flat&logo=react&logoColor=white)](https://react.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?style=flat&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![AI SDK](https://img.shields.io/badge/AI%20SDK-Vercel%20v5-purple?style=flat&logo=openai&logoColor=white)](https://sdk.vercel.ai/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?style=flat&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Redis](https://img.shields.io/badge/Redis-7-red?style=flat&logo=redis&logoColor=white)](https://redis.io/)
 [![Docker](https://img.shields.io/badge/Docker-20.10-blue?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
-[![Vercel](https://img.shields.io/badge/Vercel-Deployed-green?style=flat&logo=vercel&logoColor=white)](https://vercel.com/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Deployed-green?style=flat&logo=github&logoColor=white)](https://saas.yyc3.vip)
 [![ESLint](https://img.shields.io/badge/ESLint-8-blue?style=flat&logo=eslint&logoColor=white)](https://eslint.org/)
 [![Prettier](https://img.shields.io/badge/Prettier-3-blue?style=flat&logo=prettier&logoColor=white)](https://prettier.io/)
 
@@ -79,11 +79,12 @@ YYC³（YanYuCloudCube）是一个现代化的企业级 SaaS 平台，专注于�
 
 ### ⚡ 技术亮点
 
-- **现代化技术栈**: Next.js 16 + React 19.2 + TypeScript
+- **现代化技术栈**: Next.js 15 + React 19 + TypeScript 5
 - **AI 驱动**: 基于 Vercel AI SDK v5 构建
 - **流式响应**: 所有 AI 功能支持实时流式输出
 - **性能优化**: 三级缓存架构 + 代码分割
 - **安全可靠**: 数据加密 + 审计日志 + 隐私保护
+- **静态部署**: GitHub Pages 全站静态导出 (output: "export")
 
 ## 快速开始
 
@@ -176,27 +177,27 @@ yyc3-saas-landing/
 
 ### 前端
 
-- **框架**: Next.js 16 (App Router)
-- **UI 库**: React 19.2
+- **框架**: Next.js 15 (App Router)
+- **UI 库**: React 19
 - **类型**: TypeScript 5
-- **样式**: Tailwind CSS 4
-- **组件**: shadcn/ui
-- **动画**: Framer Motion 12
-- **图表**: Recharts 2
+- **样式**: Tailwind CSS v4
+- **组件**: shadcn/ui + Radix UI
+- **动画**: Framer Motion + GSAP
+- **图表**: Recharts
+- **3D**: Three.js + React Three Fiber
 
 ### 后端
 
-- **AI**: Vercel AI SDK 5
-- **验证**: Zod 3
-- **日期**: date-fns 4
+- **AI**: Vercel AI SDK v5
+- **验证**: Zod
+- **日期**: date-fns
 
 ### 基础设施
 
-- **部署**: Vercel
-- **数据库**: PostgreSQL (Supabase/Neon)
-- **缓存**: Redis (Upstash)
-- **存储**: Vercel Blob
-- **监控**: Vercel Analytics
+- **部署**: GitHub Pages (静态导出)
+- **CI/CD**: GitHub Actions
+- **包管理**: pnpm
+- **监控**: GitHub Analytics
 
 ## 环境变量
 
@@ -225,7 +226,58 @@ STRIPE_SECRET_KEY=sk_...
 
 ## 部署
 
-### Vercel 部署（推荐）
+### GitHub Pages 部署（当前方式） ✅
+
+项目已配置 **GitHub Actions** 自动化部署到 GitHub Pages：
+
+**自定义域名**: <https://saas.yyc3.vip>
+
+\`\`\`bash
+
+# 1. Fork 或 Clone 仓库
+
+git clone <https://github.com/YYC-Cube/yyc3-saas-landing.git>
+cd yyc3-saas-landing
+
+# 2. 安装依赖
+
+pnpm install
+
+# 3. 推送到 main 分支（自动触发部署）
+
+git add .
+git commit -m "deploy: update"
+git push origin main
+
+# 4. 访问 <https://saas.yyc3.vip>
+
+\`\`\`
+
+**CI/CD 流程：**
+
+1. Push 到 `main` 分支自动触发 GitHub Actions
+2. 自动安装依赖、构建、类型检查、Lint 检查
+3. 静态导出（output: "export"）
+4. 自动部署到 GitHub Pages
+5. 域名 `saas.yyc3.vip` 自动更新（约 2-5 分钟）
+
+### 手动部署
+
+\`\`\`bash
+
+# 本地构建
+
+pnpm build
+
+# 输出目录：./out/
+
+# 将 out/ 目录内容上传至 GitHub Pages 或任意静态托管服务
+
+\`\`\`
+
+### Vercel 部署（可选迁移）
+
+如需使用 Vercel 部署以获得更好的性能和 SSR 支持：
 
 \`\`\`bash
 
@@ -238,20 +290,7 @@ npm i -g vercel
 vercel --prod
 \`\`\`
 
-### Docker 部署
-
-\`\`\`bash
-
-# 构建镜像
-
-docker build -t yyc3-saas .
-
-# 运行容器
-
-docker run -p 3200:3200 yyc3-saas
-\`\`\`
-
-查看 [DEPLOYMENT.md](./DEPLOYMENT.md) 了解详细部署指南。
+> ⚠️ 注意：Vercel 部署需要移除 `output: "export"` 配置并恢复 API 路由。查看 [DEPLOYMENT.md](./DEPLOYMENT.md) 了解详细部署指南。
 
 ## 贡献
 
